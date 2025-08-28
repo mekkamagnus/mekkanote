@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MekkaNote - Apple Notes Inspired</title>
+    
+    <!-- Note: External CDN dependencies removed for offline compatibility -->
+    
+    <!-- Custom CSS with cache busting -->
+    <link href="/styles/main.css?v=1.0.2" rel="stylesheet" type="text/css" />
+    
+    <!-- Functional UI Utilities with cache busting -->
+    <script src="/js/ui-functions.js?v=1.0.2"></script>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="MekkaNote">
+    
+    <!-- Safe Area Support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- Apple Notes color palette defined in CSS custom properties -->
+</head>
+<body class="app-body">
+    <!-- Mobile App Container - Apple Notes Style -->
+    <div id="app" style="background-color: var(--bg-primary); font-family: var(--font-primary), var(--font-fallback);">
+        
+        <!-- Apple Notes Navigation Header -->
+        <header 
+            id="mobile-header"
+            class="mobile-header safe-area-top"
+            style="background-color: var(--bg-primary); border-bottom: 0.5pt solid var(--border-secondary);"
+        >
+            <div class="apple-nav-bar nav-container">
+                <!-- Left Action - Back to Folders (Apple Notes Style) -->
+                <button 
+                    id="back-btn"
+                    class="touch-target touch-feedback"
+                    style="color: var(--kelly-green); background: transparent; border: none; border-radius: 8px; display: flex; align-items: center; padding: 8px;"
+                    onclick="loadFolders()"
+                    aria-label="Back to Folders"
+                >
+                    <svg style="width: 20px; height: 20px; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    <span style="font-size: 1.0625rem; color: var(--kelly-green);">Folders</span>
+                </button>
+                
+                <!-- Title - Hidden on mobile, shown on larger screens -->
+                <h1 class="note-title truncate px-2" style="flex: 1; text-align: center; display: none;">All iCloud</h1>
+                
+                <!-- Right Actions - Share and More -->
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <button 
+                        id="share-btn"
+                        class="touch-target touch-feedback"
+                        style="color: var(--kelly-green); background: transparent; border: none; border-radius: 8px;"
+                        aria-label="Share"
+                    >
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                        </svg>
+                    </button>
+                    
+                    <button 
+                        id="more-btn"
+                        class="touch-target touch-feedback"
+                        style="color: var(--lion); background: transparent; border: none; border-radius: 8px;"
+                        aria-label="More actions"
+                    >
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Navigation Drawer -->
+        <div id="drawer-container">
+            <!-- Drawer will be loaded here via HTMX -->
+        </div>
+        
+        <!-- Main Content Area - Apple Notes Layout -->
+        <main 
+            id="main-content" 
+            class="apple-content-area"
+            style="background-color: var(--bg-primary);"
+        >
+            <!-- Loading State - Apple Notes Style -->
+            <div id="loading" class="loading-container" style="display: none;">
+                <div class="loading-content">
+                    <div class="spinner" style="color: var(--kelly-green);"></div>
+                </div>
+            </div>
+            
+            <!-- Content will be loaded here -->
+        </main>
+        
+        <!-- Apple Notes Tab Bar (Hidden per spec - replaced with fixed footer) -->
+        <nav 
+            class="apple-tab-bar tab-navigation"
+            style="background-color: var(--bg-primary); border-top: 0.5pt solid var(--border-secondary); display: none;"
+        >
+            <button 
+                class="tab-button active touch-target touch-feedback"
+                data-tab="notes"
+                onclick="loadNotes()"
+            >
+                <svg style="width: 24px; height: 24px; margin-bottom: 4px;" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span class="metadata-text">Notes</span>
+            </button>
+            
+            <button 
+                class="tab-button touch-target touch-feedback"
+                data-tab="search"
+                onclick="loadSearch()"
+            >
+                <svg style="width: 24px; height: 24px; margin-bottom: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <span class="metadata-text">Search</span>
+            </button>
+            
+            <button 
+                class="tab-button touch-target touch-feedback"
+                data-tab="folders"
+                onclick="loadFolders()"
+            >
+                <svg style="width: 24px; height: 24px; margin-bottom: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                </svg>
+                <span class="metadata-text">Folders</span>
+            </button>
+            
+            <button 
+                class="tab-button touch-target touch-feedback"
+                data-tab="settings"
+                onclick="loadSettings()"
+            >
+                <svg style="width: 24px; height: 24px; margin-bottom: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span class="metadata-text">Settings</span>
+            </button>
+        </nav>
+        
+        <!-- Toast Container -->
+        <div id="toast-container" class="toast toast-top toast-center z-50">
+            <!-- Toast messages will appear here -->
+        </div>
+        
+        <!-- Modal Container -->
+        <div id="modal-container">
+            <!-- Modals will be loaded here via HTMX -->
+        </div>
+        
+    </div>
+
+    <!-- Pure JavaScript Configuration -->
+    <script>
+        // Auto-focus first input in forms when content loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList') {
+                        const firstInput = document.querySelector('input[type="text"], textarea');
+                        if (firstInput) firstInput.focus();
+                    }
+                });
+            });
+            
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) {
+                observer.observe(mainContent, { childList: true, subtree: true });
+            }
+        });
+    </script>
+    
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('SW registered: ', registration);
+                })
+                .catch(function(registrationError) {
+                    console.log('SW registration failed: ', registrationError);
+                });
+        }
+    </script>
+</body>
+</html>

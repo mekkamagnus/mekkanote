@@ -1,0 +1,693 @@
+/**
+ * Main Application Styles
+ * Pure CSS Apple Notes Design System Implementation
+ */
+
+/* Base App Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.app-body {
+    background-color: var(--bg-primary);
+    min-height: 100vh;
+    font-family: var(--font-primary), var(--font-fallback);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    background-color: var(--bg-primary);
+    font-family: var(--font-primary), var(--font-fallback);
+}
+
+/* Apple Notes Design System - Color Palette & Typography */
+:root {
+  /* Primary Colors from Specification */
+  --kelly-green: #00aa00;      /* Primary accent, actions, highlights */
+  --ash-gray: #96bbbb;         /* Secondary text, subtle borders */
+  --black-olive: #414535;      /* Primary text, dark surfaces */
+  --dutch-white: #f2e3bc;      /* Light backgrounds, cards */
+  --lion: #c19875;             /* Warm accent, hover states */
+  
+  /* Semantic Color Mapping */
+  --color-primary: var(--kelly-green);
+  --color-secondary: var(--ash-gray);
+  --color-accent: var(--lion);
+  --color-neutral: var(--black-olive);
+  
+  /* Background Colors */
+  --bg-primary: #ffffff;           /* Pure white for main content */
+  --bg-secondary: #f5f5f7;         /* Light gray for sections */
+  --bg-tertiary: #f2f2f7;          /* Slightly darker for contrast */
+  --bg-grouped: #ffffff;           /* White for grouped content */
+  
+  /* Text Colors */
+  --text-primary: #000000;         /* Primary text (black) */
+  --text-secondary: #6d6d70;       /* Secondary text (gray) */
+  --text-tertiary: #8e8e93;        /* Tertiary text (light gray) */
+  --text-accent: var(--kelly-green); /* Accent links/buttons */
+  
+  /* Border Colors */
+  --border-primary: #c6c6c8;       /* Main borders */
+  --border-secondary: #e5e5ea;     /* Subtle borders */
+  --border-tertiary: #f2f2f7;      /* Very subtle dividers */
+  
+  /* Typography Scale from Specification */
+  /* Navigation Headers */
+  --font-size-nav-header: 2.125rem;  /* 34px */
+  --font-weight-nav-header: 700;
+  --line-height-nav-header: 1.2;
+  --letter-spacing-nav-header: -0.02em;
+  
+  /* Section Headers */
+  --font-size-section-header: 1.75rem;  /* 28px */
+  --font-weight-section-header: 600;
+  --line-height-section-header: 1.25;
+  --letter-spacing-section-header: -0.01em;
+  
+  /* Note Titles */
+  --font-size-note-title: 1.0625rem;  /* 17px */
+  --font-weight-note-title: 600;
+  --line-height-note-title: 1.35;
+  
+  /* Note Preview */
+  --font-size-note-preview: 0.9375rem;  /* 15px */
+  --font-weight-note-preview: 400;
+  --line-height-note-preview: 1.4;
+  
+  /* Metadata Text */
+  --font-size-metadata: 0.8125rem;  /* 13px */
+  --font-weight-metadata: 400;
+  --line-height-metadata: 1.3;
+  
+  /* Folder Names */
+  --font-size-folder: 1.0625rem;  /* 17px */
+  --font-weight-folder: 400;
+  --line-height-folder: 1.35;
+  
+  /* Apple System Font Stack */
+  --font-primary: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  --font-fallback: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-monospace: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+}
+
+/* Safe area support for mobile devices */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-area-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Apple Notes Typography Classes */
+.nav-header {
+  font-size: var(--font-size-nav-header);
+  font-weight: var(--font-weight-nav-header);
+  line-height: var(--line-height-nav-header);
+  letter-spacing: var(--letter-spacing-nav-header);
+  color: var(--text-primary);
+  font-family: var(--font-primary), var(--font-fallback);
+}
+
+.section-header {
+  font-size: var(--font-size-section-header);
+  font-weight: var(--font-weight-section-header);
+  line-height: var(--line-height-section-header);
+  letter-spacing: var(--letter-spacing-section-header);
+  color: var(--text-primary);
+  font-family: var(--font-primary), var(--font-fallback);
+}
+
+.note-title {
+  font-size: var(--font-size-note-title);
+  font-weight: var(--font-weight-note-title);
+  line-height: var(--line-height-note-title);
+  color: var(--text-primary);
+  font-family: var(--font-primary), var(--font-fallback);
+}
+
+.note-preview {
+  font-size: var(--font-size-note-preview);
+  font-weight: var(--font-weight-note-preview);
+  line-height: var(--line-height-note-preview);
+  color: var(--text-secondary);
+  font-family: var(--font-primary), var(--font-fallback);
+}
+
+.metadata-text {
+  font-size: var(--font-size-metadata);
+  font-weight: var(--font-weight-metadata);
+  line-height: var(--line-height-metadata);
+  color: var(--text-tertiary);
+  font-family: var(--font-primary), var(--font-fallback);
+}
+
+.folder-name {
+  font-size: var(--font-size-folder);
+  font-weight: var(--font-weight-folder);
+  line-height: var(--line-height-folder);
+  color: var(--text-primary);
+  font-family: var(--font-primary), var(--font-fallback);
+}
+
+/* Org-mode syntax highlighting with Apple Notes colors */
+.org-headline-1 { 
+  font-size: 2rem; 
+  font-weight: bold; 
+  color: var(--kelly-green); 
+}
+.org-headline-2 { 
+  font-size: 1.5rem; 
+  font-weight: bold; 
+  color: var(--kelly-green); 
+}
+.org-headline-3 { 
+  font-size: 1.25rem; 
+  font-weight: bold; 
+  color: var(--kelly-green); 
+}
+.org-headline-4 { 
+  font-size: 1rem; 
+  font-weight: bold; 
+  color: var(--kelly-green); 
+}
+.org-headline-5 { 
+  font-size: 0.875rem; 
+  font-weight: bold; 
+  color: var(--kelly-green); 
+}
+.org-headline-6 { 
+  font-size: 0.75rem; 
+  font-weight: bold; 
+  color: var(--kelly-green); 
+}
+
+.org-bold { font-weight: bold; }
+.org-italic { font-style: italic; }
+.org-underline { text-decoration: underline; }
+.org-strikethrough { text-decoration: line-through; }
+.org-code { 
+  background-color: var(--bg-tertiary); 
+  padding: 2px 4px; 
+  border-radius: 4px; 
+  font-size: 0.875rem; 
+  font-family: var(--font-monospace); 
+}
+
+.org-link { 
+  color: #007AFF; 
+  text-decoration: underline;
+}
+.org-link:hover { 
+  color: #0051D5;
+}
+.org-tag { 
+  background-color: color-mix(in srgb, var(--kelly-green) 10%, transparent);
+  color: var(--kelly-green);
+  padding: 4px 8px; 
+  border-radius: 16px; 
+  font-size: 0.75rem; 
+  font-weight: 500;
+  display: inline-block;
+  margin: 2px;
+}
+
+.org-list-item { margin-left: 1rem; }
+.org-todo { color: #FF9500; font-weight: 500; }
+.org-done { color: #30D158; font-weight: 500; }
+
+.org-table { 
+  border-collapse: collapse; 
+  border: 1px solid var(--border-primary); 
+}
+.org-table th { 
+  border: 1px solid var(--border-primary); 
+  background-color: var(--bg-secondary); 
+  padding: 12px; 
+  font-weight: 600; 
+}
+.org-table td { 
+  border: 1px solid var(--border-primary); 
+  padding: 12px; 
+}
+
+.org-block { 
+  background-color: var(--bg-secondary); 
+  padding: 12px; 
+  border-radius: 8px; 
+  font-family: var(--font-monospace); 
+  font-size: 0.875rem; 
+}
+.org-quote { 
+  border-left: 4px solid var(--kelly-green); 
+  padding-left: 16px; 
+  font-style: italic; 
+  color: var(--text-secondary); 
+}
+
+/* Apple Notes Animation Specifications */
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+/* Page navigation transitions - matching specification */
+.page-transition {
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+.page-transition.active {
+  transform: translateX(0);
+}
+
+/* Modal presentations - matching specification */
+.modal-transition {
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+.modal-transition.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Touch feedback - matching specification */
+.touch-feedback {
+  transition: transform 0.15s ease-out;
+}
+
+.touch-feedback:active {
+  transform: scale(0.98);
+}
+
+/* Content transitions - matching specification */
+.content-transition {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.content-transition.loaded {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from { 
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apple Notes Component Specifications */
+
+/* Folder List Item - matching specification */
+.folder-item {
+  min-height: 44pt;
+  padding: 12pt 16pt;
+  border-bottom: 0.5pt solid var(--border-secondary);
+  background-color: var(--bg-grouped);
+  font-family: var(--font-primary), var(--font-fallback);
+}
+
+.folder-item:active,
+.folder-item:hover {
+  background-color: var(--bg-secondary);
+}
+
+.folder-item-icon {
+  width: 22pt;
+  height: 22pt;
+  margin-right: 12pt;
+  color: var(--kelly-green); /* System folders */
+}
+
+.folder-item-icon.user-folder {
+  color: var(--lion); /* User folders */
+}
+
+.folder-count {
+  font-size: var(--font-size-metadata);
+  color: var(--text-secondary);
+  margin-right: 8pt;
+}
+
+/* Note List Item - matching specification */
+.note-item {
+  min-height: 60pt;
+  padding: 12pt 16pt;
+  border-bottom: 0.5pt solid var(--border-secondary);
+  background-color: var(--bg-grouped);
+}
+
+.note-item:hover {
+  background-color: var(--bg-secondary);
+}
+
+.note-item:active,
+.note-item:focus {
+  background-color: var(--bg-tertiary);
+}
+
+/* Card Specifications - matching specification */
+.apple-card {
+  background: var(--bg-grouped);
+  border-radius: 12px;
+  border: 1px solid var(--border-secondary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+/* Touch targets for mobile - iOS standard 44pt minimum */
+.touch-target {
+  min-height: 44pt;
+  min-width: 44pt;
+}
+
+/* Apple Notes Navigation Bar - matching specification height */
+.apple-nav-bar {
+  height: 44pt;
+}
+
+/* Tab Bar - matching specification */
+.apple-tab-bar {
+  height: calc(49pt + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Focus states for accessibility - Apple Notes style */
+.focus-ring:focus {
+  outline: 2px solid var(--kelly-green);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Apple Notes Button Specifications */
+.apple-button-primary {
+  background: var(--kelly-green);
+  color: white;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: var(--font-size-note-title);
+  font-weight: 600;
+  font-family: var(--font-primary), var(--font-fallback);
+  border: none;
+  min-height: 44pt;
+}
+
+.apple-button-secondary {
+  background: transparent;
+  color: var(--kelly-green);
+  border: 1px solid var(--kelly-green);
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: var(--font-size-note-title);
+  font-weight: 600;
+  font-family: var(--font-primary), var(--font-fallback);
+  min-height: 44pt;
+}
+
+/* Loading Components */
+.loading-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-primary);
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-secondary);
+  border-top: 2px solid var(--kelly-green);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Apple Notes Layout Structure */
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.apple-content-area {
+  background: var(--bg-primary);
+  padding-top: 44pt;
+  padding-bottom: calc(49pt + env(safe-area-inset-bottom));
+}
+
+.tab-navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+}
+
+.tab-button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+}
+
+.tab-button.active {
+  color: var(--kelly-green);
+}
+
+.tab-button img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+
+.apple-section-background {
+  background: var(--bg-secondary);
+}
+
+.apple-grouped-background {
+  background: var(--bg-grouped);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --kelly-green: #008800;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --text-tertiary: #666666;
+    --border-primary: #000000;
+    --border-secondary: #333333;
+  }
+  
+  .org-headline-1,
+  .org-headline-2,
+  .org-headline-3,
+  .org-headline-4,
+  .org-headline-5,
+  .org-headline-6 {
+    color: var(--kelly-green);
+  }
+  
+  .org-link {
+    color: #0000EE;
+  }
+  
+  .folder-item,
+  .note-item {
+    border-bottom: 1px solid var(--border-primary);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-slide-down {
+    animation: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break-before {
+    page-break-before: always;
+  }
+  
+  .print-break-after {
+    page-break-after: always;
+  }
+  
+  .print-break-inside-avoid {
+    page-break-inside: avoid;
+  }
+}
+
+/* Apple Notes Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode color adjustments */
+    --bg-primary: #1c1c1e;
+    --bg-secondary: #2c2c2e;
+    --bg-tertiary: #3a3a3c;
+    --bg-grouped: #1c1c1e;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #98989d;
+    --text-tertiary: #636366;
+    
+    --border-primary: #38383a;
+    --border-secondary: #2c2c2e;
+    --border-tertiary: #1c1c1e;
+    
+    /* Keep accent colors for consistency */
+    --kelly-green: #30d158;
+    --lion: #ff9f0a;
+  }
+  
+  .org-code {
+    background-color: var(--bg-tertiary);
+  }
+  
+  .org-block {
+    background-color: var(--bg-secondary);
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .apple-card {
+    background: var(--bg-grouped);
+    border-color: var(--border-secondary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+}

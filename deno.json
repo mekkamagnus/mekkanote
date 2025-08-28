@@ -1,0 +1,56 @@
+{
+  "name": "mekkanote",
+  "version": "0.1.0",
+  "description": "Mobile-first Apple Notes inspired note-taking application with org-mode support",
+  "type": "module",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "@types/react": "https://esm.sh/@types/react@18.2.0",
+    "@types/react-dom": "https://esm.sh/@types/react-dom@18.2.0",
+    "hono": "jsr:@hono/hono@^4.5.8",
+    "@hono/cors": "jsr:@hono/cors@^0.3.2",
+    "@hono/logger": "jsr:@hono/logger@^0.3.2",
+    "@hono/deno": "jsr:@hono/deno@^0.3.2",
+    "std/uuid": "jsr:@std/uuid@^1.0.5",
+    "tailwindcss": "npm:tailwindcss@3.4.0",
+    "daisyui": "npm:daisyui@4.4.0"
+  },
+  "tasks": {
+    "dev": "deno run --allow-net --allow-read --allow-write --allow-env --watch dev.ts",
+    "build": "deno run --allow-net --allow-read --allow-write --allow-env build.ts",
+    "start": "deno run --allow-net --allow-read --allow-write --allow-env src/main.ts",
+    "test": "deno test --allow-net --allow-read --allow-write --allow-env src/",
+    "test:watch": "deno test --allow-net --allow-read --allow-write --allow-env --watch src/",
+    "lint": "deno lint src/",
+    "fmt": "deno fmt src/",
+    "type-check": "deno check src/**/*.ts src/**/*.tsx"
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "singleQuote": true,
+    "proseWrap": "preserve",
+    "semiColons": false
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"],
+      "include": ["no-unused-vars", "no-implicit-any"]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       46674244-6D89-46A9-BF10-EDA802690228
+:END:
+#+title: Properties Format
+#+CREATED: [2025-08-28 Thu 12:38]
+#+UPDATED: [2025-08-28 Thu 12:38]
+
+Testing the new properties format
