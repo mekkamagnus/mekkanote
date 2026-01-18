@@ -1,10 +1,11 @@
-import { db } from '@/lib/db';
-import { notes } from '@/lib/db/schema';
 import { NextRequest } from 'next/server';
+import { NoteService } from '@/lib/services/note-service';
+
+const noteService = new NoteService();
 
 export async function GET() {
   try {
-    const allNotes = await db.select().from(notes).orderBy(notes.createdAt);
+    const allNotes = await noteService.getAll();
     return new Response(JSON.stringify(allNotes), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
@@ -29,10 +30,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const [newNote] = await db.insert(notes).values({
-      title,
-      content,
-    }).returning();
+    const newNote = await noteService.create(title, content);
 
     return new Response(JSON.stringify(newNote), {
       status: 201,

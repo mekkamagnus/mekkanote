@@ -1,7 +1,7 @@
-import { db } from '@/lib/db';
-import { notes } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
 import { NextRequest } from 'next/server';
+import { NoteService } from '@/lib/services/note-service';
+
+const noteService = new NoteService();
 
 // GET a single note by ID
 export async function GET(
@@ -10,16 +10,16 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const noteId = parseInt(id, 10);
-
-    if (isNaN(noteId)) {
-      return new Response(JSON.stringify({ error: 'Invalid note ID' }), {
+    // Validate UUID format
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return new Response(JSON.stringify({ error: 'Invalid note ID format' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    const note = await db.select().from(notes).where(eq(notes.id, noteId)).get();
+    const note = await noteService.read(id);
 
     if (!note) {
       return new Response(JSON.stringify({ error: 'Note not found' }), {
@@ -48,10 +48,10 @@ export async function PUT(
 ) {
   try {
     const { id } = await params;
-    const noteId = parseInt(id, 10);
-
-    if (isNaN(noteId)) {
-      return new Response(JSON.stringify({ error: 'Invalid note ID' }), {
+    // Validate UUID format
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return new Response(JSON.stringify({ error: 'Invalid note ID format' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -66,14 +66,7 @@ export async function PUT(
       });
     }
 
-    const [updatedNote] = await db.update(notes)
-      .set({
-        title,
-        content,
-        updatedAt: new Date(),
-      })
-      .where(eq(notes.id, noteId))
-      .returning();
+    const updatedNote = await noteService.update(id, title, content);
 
     if (!updatedNote) {
       return new Response(JSON.stringify({ error: 'Note not found' }), {
@@ -102,18 +95,18 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const noteId = parseInt(id, 10);
-
-    if (isNaN(noteId)) {
-      return new Response(JSON.stringify({ error: 'Invalid note ID' }), {
+    // Validate UUID format
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return new Response(JSON.stringify({ error: 'Invalid note ID format' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    const deletedRows = await db.delete(notes).where(eq(notes.id, noteId));
+    const deleted = await noteService.delete(id);
 
-    if (deletedRows.changes === 0) {
+    if (!deleted) {
       return new Response(JSON.stringify({ error: 'Note not found' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json' },

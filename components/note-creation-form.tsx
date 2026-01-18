@@ -15,7 +15,23 @@ interface NoteFormData {
 
 export default function NoteCreationForm() {
   const router = useRouter();
-  const [formData, setFormData] = useState<NoteFormData>({ title: "", content: "" });
+  // Pre-fill with current timestamp and default org-mode template
+  const defaultContent = `#+TITLE:
+#+DATE: ${new Date().toISOString().split('T')[0]}
+#+AUTHOR:
+#+DESCRIPTION:
+
+* Introduction
+
+* Main Content
+
+* Conclusion
+
+`;
+  const [formData, setFormData] = useState<NoteFormData>({
+    title: `Note ${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}`,
+    content: defaultContent
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
