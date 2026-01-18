@@ -33,8 +33,9 @@ Follow these steps EXACTLY in order. Do NOT stop until ALL steps are complete.
 7. Run linting if available: `bun run lint` or `npm run lint`
 8. Update AGENTS.md files if you discover reusable patterns (see below)
 9. **CRITICAL**: If checks pass, commit ALL changes with message: `feat: [Story ID] - [Story Title]`
-10. **CRITICAL**: Update the PRD at `scripts/ralph/prd.json` to set `passes: true` for the completed story
-11. **CRITICAL**: Append your progress to `scripts/ralph/progress.txt`
+10. **CRITICAL**: Update the PRD at `/home/mekael/Documents/mekkanote/scripts/ralph/prd.json` to set `passes: true` for the completed story.
+    Use this command: `jq '(.userStories[] | select(.id == "STORY_ID")) | .passes = true'` or edit the JSON directly
+11. **CRITICAL**: Append your progress to `/home/mekael/Documents/mekkanote/scripts/ralph/progress.txt`
 
 ## Completion Criteria
 
@@ -43,13 +44,17 @@ A user story is ONLY considered complete when ALL of the following are done:
 - [ ] Code is written and files are saved
 - [ ] Type-checking passes (no TypeScript errors)
 - [ ] Linting passes (no lint errors)
-- [ ] Changes are committed to git with proper message
-- [ ] PRD is updated with `passes: true`
-- [ ] Progress is logged to progress.txt
+- [ ] Changes are committed to git with proper message: `git commit -m "feat: [Story ID] - [Story Title]"`
+- [ ] PRD is updated with `passes: true` using: `jq '(.userStories[] | select(.id == "STORY_ID")) | .passes = true' scripts/ralph/prd.json > tmp.json && mv tmp.json scripts/ralph/prd.json`
+- [ ] Progress is logged to `/home/mekael/Documents/mekkanote/scripts/ralph/progress.txt`
 
-**DO NOT end your response early.** Writing code is NOT enough - you must complete ALL steps above.
+**DO NOT end your response early.** Writing code is NOT enough - you must complete ALL 6 steps above.
 
 If quality checks fail, you MUST fix the errors before committing. Do NOT commit broken code.
+
+**HOW TO COMMIT**: `git add . && git commit -m "feat: US-XXX - Story Title"`
+
+**HOW TO UPDATE PRD**: Use `jq` command above or manually edit `/home/mekael/Documents/mekkanote/scripts/ralph/prd.json` to set `"passes": true` for the completed story.
 
 ## Progress Report Format
 
