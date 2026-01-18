@@ -30,3 +30,14 @@ Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
   - Need to run `bun run db:generate` and `bun run db:push` to update database
   - The dev.db file is used for development environment
 ---
+## [2026-01-18 13:00] - US002
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Implemented CRUD operations for notes
+- Created API routes for GET, POST, PUT, and DELETE operations
+- Added proper validation and error handling
+- Files changed: app/api/notes/route.ts, app/api/notes/[id]/route.ts
+- **Learnings for future iterations:** 
+  - Next.js 16+ wraps dynamic route params in Promises
+  - API routes should handle errors gracefully and return appropriate HTTP status codes
+  - Use Drizzle ORM methods like .returning() to get updated records
+---
