@@ -6,3 +6,6 @@ git ls-files
 
 ## Read
 README.md
+prd.md
+architecture.md
+ui.md

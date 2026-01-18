@@ -319,20 +319,21 @@ The MVP includes all functionality required for Milestone 1 and Milestone 2 from
 
 - **Framework:** HTMX for dynamic interactions
 - **Styling:** Tailwind CSS with DaisyUI components
-- **Templates:** Nunjucks for server-side rendering
+- **Server-Side Rendering:** Hono framework with HTML fragment responses
+- **State Management:** Server-side with HTMX partial page updates
 - **Storage:** Browser localStorage for caching
 
 ### 8.2 Backend Stack
 
-- **Runtime:** Node.js 18+ with TypeScript
-- **Framework:** FastAPI or Express.js
+- **Runtime:** Deno with TypeScript
+- **Framework:** Hono web framework
 - **Database:** SQLite with vector extension for AI
 - **File Storage:** Local filesystem for .org files
 
 ### 8.3 AI Integration
 
 - **Provider:** OpenAI GPT-4 for content analysis (TypeScript/Deno implementation)
-- **Fallback:** Local models for offline capability (Node.js fallback if needed)
+- **Fallback:** Local models for offline capability
 - **Rate Limiting:** 60 requests per minute per user
 - **Caching:** AI responses cached for 24 hours
 

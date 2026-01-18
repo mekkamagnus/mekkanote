@@ -1,0 +1,57 @@
+# MekkaNote - Ralph Progress Tracker
+# Branch: ralph/mekkanote-mvp
+# Description: AI-Powered Note-Taking Assistant MVP - Zettelkasten-style knowledge management with bi-directional linking, AI-powered tagging, and automatic connection discovery
+
+## Completed User Stories
+None yet
+
+## In Progress
+None yet
+
+## Remaining User Stories
+US-001: Set up Next.js project with TypeScript and Tailwind
+US-002: Set up SQLite database with Drizzle ORM
+US-003: Create notes table schema
+US-004: Create note_links table schema for bi-directional linking
+US-005: Create tags table schema
+US-006: Create note_embeddings table for AI vector search
+US-007: Create NoteService with CRUD operations
+US-008: Create LinkService for bi-directional links
+US-009: Create SearchService with full-text search
+US-010: Create API route for note CRUD operations
+US-011: Create API route for search
+US-012: Create API route for bi-directional links
+US-013: Set up OpenAI SDK and environment configuration
+US-014: Create AIService for tag suggestions
+US-015: Create EmbeddingService for vector search
+US-016: Create API route for AI tag suggestions
+US-017: Create API route for AI link suggestions
+US-018: Create basic note list page with routing
+US-019: Create note detail page
+US-020: Create new note button and page
+US-021: Create note editor component
+US-022: Implement auto-save functionality
+US-023: Add [[ trigger for link search modal
+US-024: Implement note selection from search modal
+US-025: Display links and backlinks on note detail page
+US-026: Add Command palette for search (Ctrl/Cmd+K)
+US-027: Implement search result highlighting
+US-028: Add AI tag suggestion UI
+US-029: Add AI link suggestion UI
+US-030: Create link unfurling service for social media
+US-031: Create API route for link unfurling
+US-032: Display unfurled links in note content
+US-033: Add org-mode file storage service
+US-034: Integrate org file storage with note save operations
+US-035: Add dark mode support
+US-036: Add responsive mobile navigation
+US-037: Add accessibility improvements
+US-038: Configure PWA support with next-pwa
+US-039: Add error boundaries and error handling
+US-040: Add loading skeletons and optimistic UI
+
+---
+Total Stories: 40
+Completed: 0
+Remaining: 40
+Progress: 0%
