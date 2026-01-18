@@ -44,8 +44,8 @@ ARCHIVE_DIR="$SCRIPT_DIR/archive"
 LAST_BRANCH_FILE="$SCRIPT_DIR/.last-branch"
 
 # Configure agent-specific commands
-# Read prompt content once
-PROMPT_CONTENT=$(cat "$SCRIPT_DIR/prompt.md")
+# Read prompt content once and inject absolute paths
+PROMPT_CONTENT=$(cat "$SCRIPT_DIR/prompt.md" | sed "s|scripts/ralph/prd.json|$PRD_FILE|g" | sed "s|scripts/ralph/progress.txt|$PROGRESS_FILE|g" | sed "s|scripts/ralph/prompt.md|$SCRIPT_DIR/prompt.md|g")
 
 if [[ "$AGENT" == "qwen" ]]; then
   # qwen: -y for yolo mode, -p for prompt (non-interactive)
