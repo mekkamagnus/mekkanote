@@ -41,3 +41,15 @@ Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
   - API routes should handle errors gracefully and return appropriate HTTP status codes
   - Use Drizzle ORM methods like .returning() to get updated records
 ---
+
+## [2026-01-18 13:30] - US003
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Designed note creation UI with shadcn components
+- Created NoteCreationForm component with validation
+- Added create note page at /notes/create
+- Files changed: components/note-creation-form.tsx, app/notes/create/page.tsx, plus shadcn components
+- **Learnings for future iterations:** 
+  - Install shadcn components using 'npx shadcn add component-name'
+  - Use 'use client' directive for components that use React hooks
+  - Form submissions should handle loading states and errors
+---
