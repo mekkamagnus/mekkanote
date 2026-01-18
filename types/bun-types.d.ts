@@ -1,4 +1,5 @@
 // types/bun-types.d.ts
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'bun:sqlite' {
   export class Database {
     constructor(

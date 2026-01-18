@@ -1,9 +1,15 @@
-// Placeholder schema file
-// This will be updated as we implement the different tables for the user stories
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
+import { sql } from 'drizzle-orm';
 
-// Example table - will be replaced with actual schema as we implement user stories
-// export const users = sqliteTable('users', {
-//   id: integer('id').primaryKey(),
-//   name: text('name'),
-// });
+// Notes table schema
+export const notes = sqliteTable('notes', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  title: text('title').notNull(),
+  content: text('content').notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});

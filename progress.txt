@@ -1,0 +1,18 @@
+## Codebase Patterns
+- Use Drizzle ORM for database operations with SQLite
+- Use shadcn/ui components for UI elements
+- Use `@/` alias for absolute imports from project root
+- Components should be placed in `/components/ui` directory
+- Database schema defined in `/lib/db/schema.ts`
+
+## [2026-01-18 12:00] - US001
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Creating note model and schema
+- Setting up database schema with Drizzle ORM
+- Adding notes table with required fields
+- **Learnings for future iterations:**
+  - This codebase uses Drizzle ORM with SQLite for database operations
+  - Schema file is located at `/lib/db/schema.ts`
+  - Need to run `bun run db:generate` and `bun run db:push` to update database
+  - The dev.db file is used for development environment
+---

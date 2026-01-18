@@ -1,11 +1,5 @@
-import { drizzle } from 'drizzle-orm/bun-sqlite';
-import { Database } from 'bun:sqlite';
+import { drizzle } from 'drizzle-orm/better-sqlite3';
+import Database from 'better-sqlite3';
 
-// Create database instance
-const sqlite = new Database('dev.db', { create: true });
-
-// Initialize Drizzle ORM
+const sqlite = new Database(process.env.NODE_ENV === 'production' ? './db.sqlite' : './dev.db');
 export const db = drizzle(sqlite);
-
-// Export the database instance for direct access if needed
-export { sqlite };
