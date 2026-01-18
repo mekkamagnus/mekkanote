@@ -53,3 +53,16 @@ Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
   - Use 'use client' directive for components that use React hooks
   - Form submissions should handle loading states and errors
 ---
+
+## [2026-01-18 14:00] - US004
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Implemented notes list display with clickable cards
+- Created NotesList component to fetch and display notes
+- Added notes page at /notes with navigation
+- Updated homepage with navigation links
+- Files changed: components/notes-list.tsx, app/notes/page.tsx, app/page.tsx
+- **Learnings for future iterations:** 
+  - Use 'use client' for components that fetch data
+  - Each note card shows title, content preview, and creation date
+  - Clicking a note card navigates to the detail view
+---
