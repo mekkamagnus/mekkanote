@@ -16,3 +16,17 @@ Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
   - Need to run `bun run db:generate` and `bun run db:push` to update database
   - The dev.db file is used for development environment
 ---
+
+## [2026-01-18 12:30] - US001
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Implemented note model and schema with Drizzle ORM
+- Created database migration and pushed schema to SQLite
+- Added database connection utility
+- Completed type-checking and linting
+- Files changed: lib/db/schema.ts, lib/db/index.ts, env.ts, drizzle.config.ts
+- **Learnings for future iterations:**
+  - This codebase uses Drizzle ORM with SQLite for database operations
+  - Schema file is located at `/lib/db/schema.ts`
+  - Need to run `bun run db:generate` and `bun run db:push` to update database
+  - The dev.db file is used for development environment
+---

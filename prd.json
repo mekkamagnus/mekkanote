@@ -13,7 +13,7 @@
         "Database migration creates notes table",
         "Schema supports text content and timestamps"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US002",
