@@ -1,0 +1,27 @@
+{
+  "name": "mekkanote",
+  "version": "1.0.0",
+  "description": "> AI-Powered Note-Taking Assistant",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mekkamagnus/mekkanote.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mekkamagnus/mekkanote/issues"
+  },
+  "homepage": "https://github.com/mekkamagnus/mekkanote#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0"
+  }
+}

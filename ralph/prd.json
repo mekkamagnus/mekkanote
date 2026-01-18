@@ -17,8 +17,8 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Next.js project successfully set up with TypeScript, Tailwind CSS, and shadcn/ui components. Dependencies installed via Bun. Type checking passes."
     },
     {
       "id": "US-002",
@@ -32,8 +32,8 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "SQLite database configured with Drizzle ORM using bun:sqlite. Database connection established, migration system set up with drizzle.config.ts, and type checking passes."
     },
     {
       "id": "US-003",

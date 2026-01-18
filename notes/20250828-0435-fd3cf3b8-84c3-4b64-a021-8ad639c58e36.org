@@ -1,6 +1,0 @@
-#+TITLE: Test
-#+UUID: fd3cf3b8-84c3-4b64-a021-8ad639c58e36
-#+CREATED: [2025-08-28 Thu 12:35]
-#+UPDATED: [2025-08-28 Thu 12:35]
-
-Hello world

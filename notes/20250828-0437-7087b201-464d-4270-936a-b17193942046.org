@@ -1,6 +1,0 @@
-#+TITLE: New Format
-#+UUID: 7087b201-464d-4270-936a-b17193942046
-#+CREATED: [2025-08-28 Thu 12:37]
-#+UPDATED: [2025-08-28 Thu 12:37]
-
-Test content

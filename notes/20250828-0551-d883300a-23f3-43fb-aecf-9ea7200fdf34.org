@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       D883300A-23F3-43FB-AECF-9EA7200FDF34
-:CREATED:  [2025-08-28 Thu 13:51]
-:UPDATED:  [2025-08-28 Thu 13:51]
-:END:
-#+title: Test Note
-
-This is a test note content

@@ -3,13 +3,12 @@
 # Description: AI-Powered Note-Taking Assistant MVP - Zettelkasten-style knowledge management with bi-directional linking, AI-powered tagging, and automatic connection discovery
 
 ## Completed User Stories
-None yet
+US-001: Set up Next.js project with TypeScript and Tailwind
 
 ## In Progress
 None yet
 
 ## Remaining User Stories
-US-001: Set up Next.js project with TypeScript and Tailwind
 US-002: Set up SQLite database with Drizzle ORM
 US-003: Create notes table schema
 US-004: Create note_links table schema for bi-directional linking
@@ -52,6 +51,38 @@ US-040: Add loading skeletons and optimistic UI
 
 ---
 Total Stories: 40
-Completed: 0
-Remaining: 40
-Progress: 0%
+Completed: 1
+Remaining: 39
+Progress: 2.5%
+
+## Sun Jan 18 17:19:00 PST 2026 - US-001
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Set up Next.js project with TypeScript and Tailwind CSS
+- Configured shadcn/ui with necessary dependencies (clsx, tailwind-merge)
+- Created components.json configuration for shadcn/ui
+- Updated package.json with proper name and type-check script
+- Removed legacy Deno/Playwright files that were causing type errors
+- Verified type checking passes successfully
+- Created updated README.md for the Next.js project
+- **Learnings for future iterations:**
+  - This codebase now uses Next.js 14+ with App Router, TypeScript, Tailwind CSS, and shadcn/ui
+  - Bun is the preferred runtime/package manager
+  - Legacy Deno files needed to be removed to avoid type conflicts
+  - The project follows a mobile-first approach with PWA capabilities
+---
+## Sun Jan 18 17:45:00 PST 2026 - US-002
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Set up SQLite database with Drizzle ORM using bun:sqlite (since better-sqlite3 is not supported in Bun)
+- Created database configuration at lib/db/index.ts
+- Created Drizzle configuration at drizzle.config.ts
+- Created placeholder schema file at lib/db/schema.ts
+- Added database-related scripts to package.json
+- Created type declaration file for bun:sqlite module
+- Updated tsconfig.json to include custom type declarations
+- Verified type checking passes successfully
+- **Learnings for future iterations:**
+  - This codebase uses bun:sqlite instead of better-sqlite3 due to Bun runtime compatibility
+  - Custom type declarations are needed for Bun-specific modules
+  - The database configuration follows a standard Drizzle ORM setup with SQLite
+  - Migration system is configured and ready for schema changes
+---
