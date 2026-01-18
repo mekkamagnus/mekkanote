@@ -19,8 +19,13 @@ Only when ALL 6 steps are done is the story complete.
 
 Follow these steps EXACTLY in order. Do NOT stop until ALL steps are complete.
 
-1. Read the PRD at `prd.json` (in the same directory as this file)
-2. Read the progress log at `progress.txt` (check Codebase Patterns section first)
+**File Locations** (use these exact paths):
+- PRD: `scripts/ralph/prd.json`
+- Progress: `scripts/ralph/progress.txt`
+- This prompt: `scripts/ralph/prompt.md`
+
+1. Read the PRD at `scripts/ralph/prd.json`
+2. Read the progress log at `scripts/ralph/progress.txt` (check Codebase Patterns section first)
 3. Check you're on the correct branch from PRD `branchName`. If not, check it out or create from main.
 4. Pick the **highest priority** user story where `passes: false`
 5. Implement that single user story (write/edit code files)
@@ -28,8 +33,8 @@ Follow these steps EXACTLY in order. Do NOT stop until ALL steps are complete.
 7. Run linting if available: `bun run lint` or `npm run lint`
 8. Update AGENTS.md files if you discover reusable patterns (see below)
 9. **CRITICAL**: If checks pass, commit ALL changes with message: `feat: [Story ID] - [Story Title]`
-10. **CRITICAL**: Update the PRD to set `passes: true` for the completed story
-11. **CRITICAL**: Append your progress to `progress.txt`
+10. **CRITICAL**: Update the PRD at `scripts/ralph/prd.json` to set `passes: true` for the completed story
+11. **CRITICAL**: Append your progress to `scripts/ralph/progress.txt`
 
 ## Completion Criteria
 
