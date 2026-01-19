@@ -1,3 +1,48 @@
 # Ralph Progress Log
 Started: Mon Jan 19 14:42:40 CST 2026
 ---
+
+## Mon Jan 19 14:47:08 CST 2026 - US-041
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Implemented edit note page at /notes/[id]/edit
+- Page pre-fills form with existing note title and content
+- Added submit button that updates note via PUT /api/notes/[id]
+- Added cancel button that returns to note detail page
+- Implemented redirect to note detail page on success
+- Added loading and error states
+- Files changed: /app/notes/[id]/edit/page.tsx
+- **Learnings for future iterations:**
+  - This codebase uses Next.js App Router with TypeScript
+  - Components are organized in the /components/ui directory
+  - The edit page follows the same patterns as other pages in the app
+  - API routes follow REST conventions (GET, POST, PUT, DELETE)
+  - Pages use shadcn/ui components for consistent UI
+---
+## Mon Jan 19 14:47:08 CST 2026 - US-041
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Implemented edit note page at /notes/[id]/edit
+- Page pre-fills form with existing note title and content
+- Added submit button that updates note via PUT /api/notes/[id]
+- Added cancel button that returns to note detail page
+- Implemented redirect to note detail page on success
+- Added loading and error states
+- Files changed: /app/notes/[id]/edit/page.tsx
+- **Learnings for future iterations:**
+  - This codebase uses Next.js App Router with TypeScript
+  - Components are organized in the /components/ui directory
+  - The edit page follows the same patterns as other pages in the app
+  - API routes follow REST conventions (GET, POST, PUT, DELETE)
+  - Pages use shadcn/ui components for consistent UI
+---
+
+## Mon Jan 19 2026 - US-043
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Verified Command palette (Ctrl/Cmd+K) functionality is implemented and working
+- Confirmed keyboard event listener properly handles Ctrl/Cmd+K to open palette
+- Verified arrow key navigation, Enter to select, and Escape to close functionality
+- Files checked: /components/global/command-palette-provider.tsx, /components/global/command-palette.tsx
+- **Learnings for future iterations:** 
+  - Command palette is implemented with proper keyboard event handling
+  - The palette supports real-time search, navigation, and note selection
+  - All acceptance criteria for US-043 have been met
+---
