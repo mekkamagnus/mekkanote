@@ -46,3 +46,32 @@ Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
   - The palette supports real-time search, navigation, and note selection
   - All acceptance criteria for US-043 have been met
 ---
+
+## Mon Jan 19 2026 - US-044
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Verified [[ link search modal functionality is implemented and working
+- Confirmed typing [[ in note editor triggers the search modal
+- Verified modal shows list of existing notes and allows real-time filtering
+- Confirmed selecting note inserts [[note-id][note-title]] format in editor
+- Verified modal closes after selection
+- Files checked: /components/editor/note-editor.tsx, /components/modals/link-search-modal.tsx
+- **Learnings for future iterations:** 
+  - The link search modal is implemented with proper event detection for [[ trigger
+  - The modal supports real-time search, navigation, and note insertion
+  - All acceptance criteria for US-044 have been met
+---
+
+## Mon Jan 19 2026 - US-041
+Thread: https://ampcode.com/threads/$AMP_CURRENT_THREAD_ID
+- Verified edit note page functionality is implemented and working
+- Confirmed edit page at /notes/[id]/edit pre-fills form with existing note data
+- Verified submit button updates note via PUT /api/notes/[id]
+- Confirmed cancel button returns to note detail page
+- Verified success redirects to note detail page with updated content
+- Verified loading and error states work properly
+- Files checked: /app/notes/[id]/edit/page.tsx
+- **Learnings for future iterations:** 
+  - The edit page was already implemented with all required functionality
+  - The page follows the same patterns as other pages in the app
+  - All acceptance criteria for US-041 have been met
+---

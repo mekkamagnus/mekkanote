@@ -1,18 +1,732 @@
 {
-  "id": "US-043",
-  "title": "Verify and test Command palette (Ctrl/Cmd+K) functionality",
-  "description": "As a user, I want to search notes using keyboard shortcut Command palette.",
-  "acceptanceCriteria": [
-    "Pressing Ctrl/Cmd+K opens Command palette",
-    "Command palette renders search input",
-    "Typing shows real-time search results",
-    "Arrow keys navigate results",
-    "Enter selects note and navigates to it",
-    "Escape or click outside closes palette",
-    "Typecheck passes",
-    "Verify in browser using dev-browser skill"
-  ],
-  "priority": 43,
-  "passes": true,
-  "notes": "US-026 marked as complete but functionality not verified. Need to test and confirm working."
+  "project": "MekkaNote",
+  "branchName": "ralph/mekkanote-mvp-fixes",
+  "description": "AI-Powered Note-Taking Assistant MVP - Zettelkasten-style knowledge management with bi-directional linking, AI-powered tagging, and automatic connection discovery",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Set up Next.js project with TypeScript and Tailwind",
+      "description": "As a developer, I need to set up the Next.js project with all required dependencies.",
+      "acceptanceCriteria": [
+        "Next.js 14+ project created with App Router",
+        "TypeScript configured",
+        "Tailwind CSS installed and configured",
+        "shadcn/ui initialized with default components",
+        "Bun runtime configured",
+        "Project runs successfully with 'bun run dev'",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Set up SQLite database with Drizzle ORM",
+      "description": "As a developer, I need to configure the database layer for data persistence.",
+      "acceptanceCriteria": [
+        "SQLite database file created",
+        "Drizzle ORM configured",
+        "Database connection pool set up",
+        "Migration system configured",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Create notes table schema",
+      "description": "As a developer, I need to create the database schema for storing notes.",
+      "acceptanceCriteria": [
+        "notes table created with columns: id (uuid), title, content, created_at, updated_at",
+        "Migration file generated and executed successfully",
+        "Schema exported for use in Drizzle ORM",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Create note_links table schema for bi-directional linking",
+      "description": "As a developer, I need to create the database schema for storing note relationships.",
+      "acceptanceCriteria": [
+        "note_links table created with columns: id, source_note_id, target_note_id, created_at",
+        "Foreign key constraints added to notes table",
+        "Index created on source_note_id and target_note_id for fast lookups",
+        "Migration file generated and executed successfully",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Create tags table schema",
+      "description": "As a developer, I need to create the database schema for storing note tags.",
+      "acceptanceCriteria": [
+        "tags table created with columns: id, note_id, name, created_at",
+        "Foreign key constraint added to notes table",
+        "Index created on note_id and name for fast filtering",
+        "Migration file generated and executed successfully",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Create note_embeddings table for AI vector search",
+      "description": "As a developer, I need to create the database schema for storing note embeddings.",
+      "acceptanceCriteria": [
+        "note_embeddings table created with columns: id, note_id, embedding, model_name, created_at",
+        "Foreign key constraint added to notes table",
+        "sqlite-vec extension configured for vector operations",
+        "Migration file generated and executed successfully",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Create NoteService with CRUD operations",
+      "description": "As a developer, I need to create a service layer for note management.",
+      "acceptanceCriteria": [
+        "NoteService class created with create, read, update, delete methods",
+        "All methods use Drizzle ORM for database operations",
+        "UUID generation for new notes",
+        "Error handling for duplicate notes and not found cases",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Create LinkService for bi-directional links",
+      "description": "As a developer, I need to create a service layer for managing note links.",
+      "acceptanceCriteria": [
+        "LinkService class created with createLink, deleteLink, getBacklinks methods",
+        "createLink creates bi-directional link (source→target and backlink)",
+        "getBacklinks retrieves all incoming links for a note",
+        "Error handling for duplicate links and circular references",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Create SearchService with full-text search",
+      "description": "As a developer, I need to create a service for searching notes.",
+      "acceptanceCriteria": [
+        "SearchService class created with searchNotes method",
+        "Search covers title, content, and tags",
+        "Results ranked by relevance (title matches first, then content)",
+        "Pagination support for large result sets",
+        "Typecheck passes"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Create API route for note CRUD operations",
+      "description": "As a developer, I need to create API endpoints for note management.",
+      "acceptanceCriteria": [
+        "POST /api/notes endpoint for creating notes",
+        "GET /api/notes/[id] endpoint for retrieving a single note",
+        "GET /api/notes endpoint for listing all notes",
+        "PUT /api/notes/[id] endpoint for updating notes",
+        "DELETE /api/notes/[id] endpoint for deleting notes",
+        "All endpoints validate input and return proper error responses",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Create API route for search",
+      "description": "As a developer, I need to create an API endpoint for searching notes.",
+      "acceptanceCriteria": [
+        "GET /api/search endpoint with query parameter",
+        "Returns array of matching notes with relevance scores",
+        "Empty query returns empty array",
+        "Error handling for invalid queries",
+        "Typecheck passes"
+      ],
+      "priority": 11,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Create API route for bi-directional links",
+      "description": "As a developer, I need to create API endpoints for managing note links.",
+      "acceptanceCriteria": [
+        "POST /api/links endpoint for creating links",
+        "DELETE /api/links/[id] endpoint for deleting links",
+        "GET /api/notes/[id]/backlinks endpoint for retrieving backlinks",
+        "Link creation automatically creates backlink",
+        "Error handling for self-links and duplicate links",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Set up OpenAI SDK and environment configuration",
+      "description": "As a developer, I need to configure OpenAI integration for AI features.",
+      "acceptanceCriteria": [
+        "OpenAI SDK installed",
+        "Environment variables configured for API key",
+        "AI service configuration created",
+        "Error handling for missing API keys",
+        "Typecheck passes"
+      ],
+      "priority": 13,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Create AIService for tag suggestions",
+      "description": "As a developer, I need to create a service for AI-powered tag generation.",
+      "acceptanceCriteria": [
+        "AIService class created with suggestTags method",
+        "Calls OpenAI GPT-4 API with note content",
+        "Returns array of 1-5 relevant tags",
+        "Tags follow org-mode conventions (#+TAGS:)",
+        "Caching layer to avoid duplicate API calls",
+        "Error handling for API failures",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-015",
+      "title": "Create EmbeddingService for vector search",
+      "description": "As a developer, I need to create a service for generating and storing embeddings.",
+      "acceptanceCriteria": [
+        "EmbeddingService class created with generateEmbedding method",
+        "Uses OpenAI text-embedding-3-small model",
+        "Stores embeddings in note_embeddings table",
+        "findSimilarNotes method for vector similarity search",
+        "Error handling for API failures",
+        "Typecheck passes"
+      ],
+      "priority": 15,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-016",
+      "title": "Create API route for AI tag suggestions",
+      "description": "As a developer, I need to create an API endpoint for AI tag suggestions.",
+      "acceptanceCriteria": [
+        "POST /api/ai/suggest-tags endpoint with note content",
+        "Returns array of suggested tags",
+        "Caching to prevent duplicate API calls",
+        "Rate limiting (60 requests per minute per user)",
+        "Error handling for API failures",
+        "Typecheck passes"
+      ],
+      "priority": 16,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-017",
+      "title": "Create API route for AI link suggestions",
+      "description": "As a developer, I need to create an API endpoint for AI-powered connection suggestions.",
+      "acceptanceCriteria": [
+        "POST /api/ai/suggest-links endpoint with note id",
+        "Returns array of suggested linked notes with relevance scores",
+        "Uses EmbeddingService to find similar notes",
+        "Excludes already-linked notes",
+        "Caching for performance",
+        "Error handling for API failures",
+        "Typecheck passes"
+      ],
+      "priority": 17,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-018",
+      "title": "Create basic note list page with routing",
+      "description": "As a user, I want to see a list of all my notes.",
+      "acceptanceCriteria": [
+        "Page created at /notes route",
+        "Fetches and displays list of notes from API",
+        "Each note shows title, created date, and first 100 characters",
+        "Loading state while fetching",
+        "Error state if fetch fails",
+        "Responsive layout (mobile and desktop)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 18,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-019",
+      "title": "Create note detail page",
+      "description": "As a user, I want to view a single note in full.",
+      "acceptanceCriteria": [
+        "Page created at /notes/[id] route",
+        "Fetches and displays note content from API",
+        "Shows created and updated dates",
+        "Loading and error states",
+        "Link to return to note list",
+        "Responsive layout",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 19,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-020",
+      "title": "Create new note button and page",
+      "description": "As a user, I want to create a new note.",
+      "acceptanceCriteria": [
+        "Floating action button or header button on note list page",
+        "Navigates to /notes/new route",
+        "Pre-fills note with UUID and current timestamp",
+        "Default org-mode template structure",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 20,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-021",
+      "title": "Create note editor component",
+      "description": "As a user, I want to write and edit notes.",
+      "acceptanceCriteria": [
+        "Textarea component for note editing",
+        "Uses shadcn/ui Textarea or similar",
+        "Placeholder text shows org-mode syntax hints",
+        "Auto-focus on load",
+        "Character counter",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 21,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-022",
+      "title": "Implement auto-save functionality",
+      "description": "As a user, I want my notes to save automatically.",
+      "acceptanceCriteria": [
+        "Auto-save triggers every 30 seconds",
+        "Also saves on blur (when leaving the editor)",
+        "Visual indicator shows 'Saving...' and 'Saved' states",
+        "Debouncing to prevent excessive API calls",
+        "Error handling if save fails",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 22,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-023",
+      "title": "Add [[ trigger for link search modal",
+      "description": "As a user, I want a search modal to appear when I type [[ in the editor.",
+      "acceptanceCriteria": [
+        "Event listener detects [[ in editor",
+        "Opens shadcn/ui Dialog/Command modal",
+        "Search input focused automatically",
+        "Shows list of existing notes as you type",
+        "Keyboard navigation (arrow keys, enter to select)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 23,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-024",
+      "title": "Implement note selection from search modal",
+      "description": "As a user, I want to select a note from the search modal to create a link.",
+      "acceptanceCriteria": [
+        "Clicking or pressing enter on a note inserts [[note-id]] into editor",
+        "Modal closes after selection",
+        "Option to create new note if no match found",
+        "New note creation opens in new tab or modal",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 24,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-025",
+      "title": "Display links and backlinks on note detail page",
+      "description": "As a user, I want to see which notes link to and from the current note.",
+      "acceptanceCriteria": [
+        "'Links' section shows outbound links from note",
+        "'Backlinks' section shows inbound links to note",
+        "Each link shows note title and is clickable",
+        "Broken links highlighted in red",
+        "Sections empty if no links",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 25,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-026",
+      "title": "Add Command palette for search (Ctrl/Cmd+K)",
+      "description": "As a user, I want to search notes using keyboard shortcut.",
+      "acceptanceCriteria": [
+        "Ctrl/Cmd+K opens Command palette (shadcn/ui Command)",
+        "Search input focused automatically",
+        "Real-time search results as you type",
+        "Shows matching notes with title and snippet",
+        "Arrow keys and Enter to navigate and select",
+        "Click outside or Escape to close",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 26,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-027",
+      "title": "Implement search result highlighting",
+      "description": "As a user, I want matching text to be highlighted in search results.",
+      "acceptanceCriteria": [
+        "Search term highlighted in note title",
+        "Search term highlighted in content snippet",
+        "Case-insensitive matching",
+        "Highlight uses distinct color (yellow or similar)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 27,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-028",
+      "title": "Add AI tag suggestion UI",
+      "description": "As a user, I want AI to suggest tags for my notes.",
+      "acceptanceCriteria": [
+        "Tags appear in dedicated section after note creation",
+        "Tags appear within 5 seconds of content creation",
+        "Each tag is clickable to accept/remove",
+        "Visual indicator for AI-suggested vs user-added tags",
+        "Loading state while generating suggestions",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 28,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-029",
+      "title": "Add AI link suggestion UI",
+      "description": "As a user, I want AI to suggest related notes to link to.",
+      "acceptanceCriteria": [
+        "'Suggested Links' section on note detail page",
+        "Shows up to 5 suggested connections",
+        "Each suggestion shows note title and relevance score",
+        "Accept button creates link and removes suggestion",
+        "Dismiss button removes suggestion permanently",
+        "Empty state if no suggestions",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 29,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-030",
+      "title": "Create link unfurling service for social media",
+      "description": "As a developer, I need to create a service for fetching link previews.",
+      "acceptanceCriteria": [
+        "LinkUnfurlService class created with fetchPreview method",
+        "Detects Twitter/X and YouTube URLs",
+        "Fetches metadata using appropriate APIs or scraping",
+        "Returns standardized preview object (title, thumbnail, description)",
+        "Caching to avoid repeated requests",
+        "Error handling for failed fetches",
+        "Timeout after 2 seconds",
+        "Typecheck passes"
+      ],
+      "priority": 30,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-031",
+      "title": "Create API route for link unfurling",
+      "description": "As a developer, I need to create an API endpoint for link previews.",
+      "acceptanceCriteria": [
+        "POST /api/unfurl endpoint with URL parameter",
+        "Returns preview object or null if unfurl unavailable",
+        "Rate limiting to prevent abuse",
+        "Error handling for invalid URLs",
+        "Typecheck passes"
+      ],
+      "priority": 31,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-032",
+      "title": "Display unfurled links in note content",
+      "description": "As a user, I want to see previews of Twitter and YouTube links in my notes.",
+      "acceptanceCriteria": [
+        "Component renders preview card for social media URLs",
+        "Twitter preview shows tweet content, author, and image",
+        "YouTube preview shows thumbnail, title, and duration",
+        "Preview cards load within 2 seconds",
+        "Fallback link if preview unavailable",
+        "Previews responsive on mobile and desktop",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 32,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-033",
+      "title": "Add org-mode file storage service",
+      "description": "As a developer, I need to save notes as .org files on the filesystem.",
+      "acceptanceCriteria": [
+        "OrgFileService class created with saveNote and readNote methods",
+        "Saves each note as individual .org file",
+        "File naming: YYYYMMDD-HHMMSS-uuid.org",
+        "UTF-8 encoding",
+        "Proper org-mode header with title and metadata",
+        "Organized directory structure (by year/month)",
+        "Error handling for filesystem failures",
+        "Typecheck passes"
+      ],
+      "priority": 33,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-034",
+      "title": "Integrate org file storage with note save operations",
+      "description": "As a developer, I need to ensure notes are saved to filesystem whenever they're saved to database.",
+      "acceptanceCriteria": [
+        "NoteService calls OrgFileService on create and update",
+        "Transaction handling: database and filesystem save together or fail together",
+        "Idempotent: repeated saves don't create duplicate files",
+        "Cleanup of old files if note is deleted",
+        "Typecheck passes"
+      ],
+      "priority": 34,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-035",
+      "title": "Add dark mode support",
+      "description": "As a user, I want to switch between light and dark themes.",
+      "acceptanceCriteria": [
+        "Theme toggle button in header",
+        "Theme preference saved to localStorage",
+        "Theme persists across page refreshes",
+        "shadcn/ui components respect theme setting",
+        "Smooth transition between themes",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 35,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-036",
+      "title": "Add responsive mobile navigation",
+      "description": "As a mobile user, I want easy navigation on small screens.",
+      "acceptanceCriteria": [
+        "Hamburger menu on screens < 768px",
+        "Drawer or dropdown for navigation items",
+        "Touch targets minimum 44x44px",
+        "Smooth animations for open/close",
+        "Click outside to close",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 36,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-037",
+      "title": "Add accessibility improvements",
+      "description": "As a user with disabilities, I want the app to be accessible.",
+      "acceptanceCriteria": [
+        "All interactive elements keyboard navigable",
+        "ARIA labels on buttons and inputs",
+        "Focus indicators visible on all elements",
+        "Screen reader friendly",
+        "Color contrast meets WCAG 2.1 AA standards",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 37,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-038",
+      "title": "Configure PWA support with next-pwa",
+      "description": "As a user, I want to install the app as a PWA.",
+      "acceptanceCriteria": [
+        "next-pwa plugin configured",
+        "Web app manifest created",
+        "Service worker registered",
+        "App installable on desktop and mobile",
+        "Works offline (at least shows cached shell)",
+        "Typecheck passes"
+      ],
+      "priority": 38,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-039",
+      "title": "Add error boundaries and error handling",
+      "description": "As a user, I want helpful error messages when something goes wrong.",
+      "acceptanceCriteria": [
+        "Error boundaries catch React errors",
+        "User-friendly error messages displayed",
+        "API errors show helpful messages",
+        "Network errors prompt user to check connection",
+        "Error state components with retry buttons",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 39,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-040",
+      "title": "Add loading skeletons and optimistic UI",
+      "description": "As a user, I want smooth loading experiences.",
+      "acceptanceCriteria": [
+        "Skeleton screens for note list while loading",
+        "Optimistic updates for link creation (shows immediately)",
+        "Smooth transitions between states",
+        "No layout shift during loading",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 40,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-041",
+      "title": "Create edit note page",
+      "description": "As a user, I want to edit existing notes through a dedicated edit page.",
+      "acceptanceCriteria": [
+        "Edit page created at /notes/[id]/edit route",
+        "Page pre-fills form with existing note title and content",
+        "Submit button updates note via PUT /api/notes/[id]",
+        "Cancel button returns to note detail page",
+        "Success redirects to note detail page with updated content",
+        "Loading and error states",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 41,
+      "passes": true,
+      "notes": "Currently returns 404. Need to create edit page component."
+    },
+    {
+      "id": "US-042",
+      "title": "Fix AI model configuration for tag and link suggestions",
+      "description": "As a developer, I need to fix the OpenAI model configuration so AI features work.",
+      "acceptanceCriteria": [
+        "Update AIService to use valid OpenAI model (replace gpt-4o-mini)",
+        "Update EmbeddingService to use valid embedding model (replace text-embedding-3-small)",
+        "Verify API key has access to chosen models",
+        "Test POST /api/ai/suggest-tags returns 200 with valid suggestions",
+        "Test POST /api/ai/suggest-links returns 200 with valid suggestions",
+        "Add fallback/error handling if models unavailable",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 42,
+      "passes": true,
+      "notes": "Migrated from OpenAI to DeepSeek API. Tag suggestions now use deepseek-chat model. Embedding service now uses text-based Jaccard similarity since DeepSeek doesn't provide embeddings API."
+    },
+    {
+      "id": "US-043",
+      "title": "Verify and test Command palette (Ctrl/Cmd+K) functionality",
+      "description": "As a user, I want to search notes using keyboard shortcut Command palette.",
+      "acceptanceCriteria": [
+        "Pressing Ctrl/Cmd+K opens Command palette",
+        "Command palette renders search input",
+        "Typing shows real-time search results",
+        "Arrow keys navigate results",
+        "Enter selects note and navigates to it",
+        "Escape or click outside closes palette",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 43,
+      "passes": true,
+      "notes": "US-026 marked as complete but functionality not verified. Need to test and confirm working."
+    },
+    {
+      "id": "US-044",
+      "title": "Verify and test [[ link search modal in editor",
+      "description": "As a user, I want a search modal to appear when I type [[ in the note editor.",
+      "acceptanceCriteria": [
+        "Typing [[ in note editor triggers search modal",
+        "Modal shows list of existing notes",
+        "Typing filters note list in real-time",
+        "Selecting note inserts [[note-id]] link in editor",
+        "Modal closes after selection",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 44,
+      "passes": true,
+      "notes": "US-023 and US-024 marked as complete but functionality not verified. Need to test and confirm working."
+    }
+  ]
 }
