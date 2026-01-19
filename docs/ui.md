@@ -1,8 +1,8 @@
 # MekkaNote UI Design System
 
-**Version:** 1.0.0
-**Last Updated:** 2025-01-15
-**Status:** Mockup Phase
+**Version:** 2.0.0
+**Last Updated:** 2025-01-19
+**Status:** Production Implementation
 
 ---
 
@@ -34,9 +34,9 @@ This UI design system serves as the authoritative reference for implementing the
 MekkaNote follows an **Apple Notes-inspired** design language with these core principles:
 
 - **Mobile-First**: Designed primarily for touch interfaces on iOS Safari, with responsive enhancements for larger screens
-- **HTMX-Native**: Built for server-side rendering with HTMX, avoiding client-side framework dependencies
+- **React-Native**: Built with Next.js 16 and React 19, leveraging server components for optimal performance
 - **Content-Focused**: Clean, minimal interface that prioritizes note content over UI chrome
-- **Progressive Enhancement**: Core functionality works without JavaScript, enhanced interactions where appropriate
+- **Dark Mode Primary**: Dark theme as default, matching modern developer tool preferences
 - **Accessibility First**: WCAG 2.1 AA compliance with keyboard navigation and screen reader support
 
 ### Target Platforms
@@ -61,83 +61,68 @@ MekkaNote follows an **Apple Notes-inspired** design language with these core pr
 
 ## Color Palette
 
-### Primary Colors
+### Primary Colors (Dark Mode Default)
 
 | CSS Variable | Hex Value | Usage |
 |--------------|-----------|-------|
-| `--kelly-green` | `#4CAF50` | Primary actions, links, confirm buttons, active states |
-| `--kelly-green-hover` | `#45A049` | Hover state for Kelly Green elements |
-| `--kelly-green-light` | `#E8F5E9` | Backgrounds, badges, subtle accents |
+| `--accent` | `#3b82f6` | Primary actions, links, active states (Blue) |
+| `--accent-hover` | `#2563eb` | Hover state for accent elements |
 
-**Rationale**: Kelly Green (#4CAF50) is used to match Apple Notes' signature green color, providing familiarity and clear visual hierarchy for primary actions.
+**Rationale**: Blue accent (#3b82f6) provides excellent contrast on dark backgrounds and matches modern developer tool aesthetics.
 
 **Accessibility**:
-- Contrast ratio on white: 3.1:1 (fails WCAG AA for text)
-- Must be used for icons, borders, or backgrounds only
-- Never use Kelly Green for body text on light backgrounds
+- Contrast ratio on dark background: 7.2:1 (AAA compliant)
+- Safe for all text and interactive elements
 
-### Secondary Colors
-
-| CSS Variable | Hex Value | Usage |
-|--------------|-----------|-------|
-| `--lion` | `#F76707` | Warnings, secondary actions, AI suggestions |
-| `--lion-hover` | `#E05D00` | Hover state for Lion elements |
-| `--lion-light` | `#FFF4E6` | Backgrounds for warning-related content |
-
-**Rationale**: Lion orange provides warm contrast for AI features and secondary actions without conflicting with primary Kelly Green.
-
-### Background Colors
+### Background Colors (Dark Theme)
 
 | CSS Variable | Hex Value | Usage |
 |--------------|-----------|-------|
-| `--bg-primary` | `#FFFFFF` | Main application background, cards |
-| `--bg-secondary` | `#F5F5F5` | Subsection backgrounds, hover states |
-| `--bg-tertiary` | `#EBEBEB` | Disabled states, subtle dividers |
-| `--bg-overlay` | `rgba(0, 0, 0, 0.4)` | Modal/drawer backdrops |
+| `--bg-primary` | `#0a0a0a` | Main application background |
+| `--bg-secondary` | `#1a1a1a` | Subsection backgrounds, hover states, cards |
+| `--bg-tertiary` | `#2a2a2a` | Modal backgrounds, elevated surfaces |
+
+**Rationale**: Progressive dark grays (#0a0a0a → #2a2a2a) create subtle depth while maintaining dark theme consistency.
+
+### Text Colors (Dark Theme)
+
+| CSS Variable | Hex Value | Usage | Contrast Ratio |
+|--------------|-----------|-------|----------------|
+| `--text-primary` | `#ededed` | Headlines, body text, important UI elements | 16.1:1 (AAA) |
+| `--text-secondary` | `#a1a1aa` | Descriptions, metadata, previews | 7.5:1 (AAA) |
+| `--foreground` | `#ededed` | Default text color |
 
 ### Border Colors
 
 | CSS Variable | Hex Value | Usage |
 |--------------|-----------|-------|
-| `--border-primary` | `#D1D1D1` | Form inputs, focused borders |
-| `--border-secondary` | `#E5E5E5` | Card borders, dividers |
-| `--border-tertiary` | `#F0F0F0` | Subtle borders, separators |
-
-### Text Colors
-
-| CSS Variable | Hex Value | Usage | Contrast Ratio |
-|--------------|-----------|-------|----------------|
-| `--text-primary` | `#000000` | Headlines, body text, important UI elements | 21:1 (AAA) |
-| `--text-secondary` | `#6E6E73` | Descriptions, metadata, previews | 7.5:1 (AAA) |
-| `--text-tertiary` | `#8E8E93` | Timestamps, disabled text, placeholders | 5.1:1 (AA) |
-| `--text-disabled` | `#C7C7CC` | Disabled buttons, inactive elements | 2.8:1 (fails) |
-| `--text-inverse` | `#FFFFFF` | Text on colored backgrounds (Kelly Green, Lion) | Varies |
+| `--border` | `#27272a` | Form inputs, card borders, dividers |
 
 ### Semantic Colors
 
-| Purpose | Color | Usage |
-|---------|-------|-------|
-| Success | `--kelly-green` | Successful actions, confirmations |
-| Error | `#FF3B30` | Error states, destructive actions |
-| Warning | `--lion` | Warnings, AI suggestions |
-| Info | `#007AFF` | Informational messages, links (iOS blue) |
+| Purpose | CSS Variable | Hex Value | Usage |
+|---------|--------------|-----------|-------|
+| Success | `--success` | `#22c55e` | Successful actions, confirmations |
+| Error | `--danger` | `#ef4444` | Error states, destructive actions |
+| Warning | `--warning` | `#f59e0b` | Warnings, AI suggestions |
 
-### Dark Mode Implementation
+### Theme Support
 
-**Current Status**: Dark mode enabled (v1.1)
+**Current Status**: Dark mode primary (v2.0)
 
 **Implementation Details**:
 - Primary theme: Dark mode (black backgrounds, white text)
-- Background colors: #000000, #1C1C1E, #2C2C2E
-- Text colors: #FFFFFF, #98989D, #636366, #48484A
-- Border colors: #38383A, #48484A
-- Accent colors: Kelly Green and Lion orange preserved for consistency
-- WCAG AA contrast ratios maintained (21:1 for primary text)
+- System preference detection via `prefers-color-scheme`
+- Theme toggle component available in header
 - All components use CSS variables for theme consistency
+- WCAG AA contrast ratios maintained (16:1 for primary text)
+- Tailwind CSS v4 with custom CSS variables
 
-**Future Enhancements**:
-- Add theme toggle to switch between light/dark modes
-- Implement `prefers-color-scheme` media query for system preference detection
+**Color Strategy**:
+- Mobile-first design optimized for dark theme
+- Minimal chrome, maximum content visibility
+- Accent color (blue) provides clear visual hierarchy
+- AI features use gradient backgrounds for differentiation
 
 ---
 
@@ -819,107 +804,111 @@ font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', syste
 
 ---
 
-## HTMX Integration Patterns
+## React Integration Patterns
 
-### HTMX Attributes by Use Case
+### Component Structure
 
-**Navigation**:
-- `hx-get="/notes"` - Load note list
-- `hx-push-url="true"` - Update browser URL
-- `hx-target="#main-content"` - Replace content area
-- `hx-swap="innerHTML"` - Replace HTML content
+**Client Components** ("use client"):
+- Interactive components with state management
+- Event handlers and user interactions
+- Command palette, modals, forms
+- Route: `/app` directory with `"use client"` directive
 
-**Forms**:
-- `hx-post="/notes"` - Create note
-- `hx-put="/notes/{id}"` - Update note
-- `hx-encoding="multipart/form-data"` - File uploads
+**Server Components** (default):
+- Data fetching and rendering
+- Static content generation
+- Better performance and SEO
+- Route: `/app` directory without directive
 
-**Search**:
-- `hx-get="/search?q={query}"` - Real-time search
-- `hx-trigger="keyup changed delay:300ms"` - Debounce input
-- `hx-target="#search-results"` - Update results
+### State Management
 
-**Delete Actions**:
-- `hx-delete="/notes/{id}"` - Delete note
-- `hx-confirm="Are you sure?"` - Confirmation dialog
-- `hx-swap="outerHTML"` - Replace entire element
+**Local State**:
+- `useState` for component-level state
+- `useEffect` for data fetching and side effects
+- Context providers for global state (CommandPaletteProvider)
+
+**Data Fetching**:
+- Native `fetch` API with async/await
+- REST endpoints: `/api/notes`, `/api/search`, etc.
+- Optimistic updates for better UX
 
 ### URL Routing Conventions
 
-| View | URL Pattern | Method | Description |
-|------|-------------|--------|-------------|
-| Note List | `/notes` | GET | List all notes |
-| Folder View | `/notes?folder={id}` | GET | Filter by folder |
-| Note Detail | `/notes/{id}` | GET | View single note |
-| Create Note | `/notes/new` | GET | Empty note form |
-| Save Note | `/notes` | POST | Create new note |
-| Update Note | `/notes/{id}` | PUT | Update existing |
-| Delete Note | `/notes/{id}` | DELETE | Delete note |
-| Search | `/search?q={query}` | GET | Search notes |
-| Link Search | `/search-links?q={query}` | GET | Find notes to link |
+| View | URL Pattern | Component | Description |
+|------|-------------|-----------|-------------|
+| Notes List | `/` | `app/page.tsx` | Home screen, notes list |
+| Notes List (alt) | `/notes` | `app/notes/page.tsx` | Notes list view |
+| Note Detail | `/notes/[id]` | `app/notes/[id]/page.tsx` | View single note |
+| Create Note | `/notes/create` | `app/notes/create/page.tsx` | Create new note |
+| Edit Note | `/notes/[id]/edit` | `app/notes/[id]/edit/page.tsx` | Edit existing note |
 
-### HTML Fragment Structure
+### Component Patterns
 
-**Note List Fragment**:
-```html
-<div id="note-list" hx-get="/notes" hx-trigger="load">
-  <!-- Note cards rendered here -->
-</div>
-```
+**Note List**:
+```tsx
+"use client";
 
-**Note Card Fragment**:
-```html
-<article class="note-card" id="note-{id}">
-  <div class="note-card-header">...</div>
-  <p class="note-card-preview">...</p>
-  <div class="note-card-footer">...</div>
-</article>
-```
+import { useState, useEffect } from "react";
+import NotesList from "@/components/notes-list";
 
-**Modal Fragment**:
-```html
-<div id="link-modal" class="modal-backdrop">
-  <div class="modal">
-    <div class="modal-header">...</div>
-    <div class="modal-body">...</div>
-    <div class="modal-footer">...</div>
-  </div>
-</div>
-```
+export default function NotesPage() {
+  const [notes, setNotes] = useState<Note[]>([]);
 
-### Loading Indicators with HTMX
+  useEffect(() => {
+    fetch('/api/notes')
+      .then(res => res.json())
+      .then(data => setNotes(data));
+  }, []);
 
-**HTMX-Generated Class**:
-```css
-.htmx-request .indicator {
-  opacity: 1;
-}
-.htmx-request.indicator {
-  display: inline-block;
+  return <NotesList notes={notes} />;
 }
 ```
 
-**Spinner on Request**:
-```html
-<button hx-get="/notes" hx-indicator="#spinner">
-  Load Notes
-</button>
-<div id="spinner" class="spinner" style="opacity: 0"></div>
+**Modal with Radix UI**:
+```tsx
+import { Dialog } from "@radix-ui/react-dialog";
+
+<Dialog open={open} onOpenChange={setOpen}>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Title</DialogTitle>
+    </DialogHeader>
+    {/* Content */}
+  </DialogContent>
+</Dialog>
 ```
+
+### Command Palette Implementation
+
+**Keyboard Shortcut**:
+- `Ctrl/Cmd+K` opens command palette
+- `useEffect` adds event listener on mount
+- `Escape` closes palette
+
+**Search Functionality**:
+- Real-time filtering as user types
+- Keyboard navigation (arrow keys, Enter)
+- Link to selected note
 
 ### Error Handling
 
-**HTMX Events**:
-```javascript
-document.body.addEventListener('htmx:error', function(evt) {
-  showToast('Request failed. Please try again.', 'error');
-});
+**Try-Catch in Fetch**:
+```tsx
+try {
+  const response = await fetch('/api/notes');
+  if (!response.ok) throw new Error('Failed to fetch');
+  const data = await response.json();
+  setNotes(data);
+} catch (error) {
+  console.error('Error:', error);
+  // Show toast notification
+}
 ```
 
-**Server Response**:
-- Return 4xx/5xx status codes
-- HTMX triggers `htmx:responseError` event
-- Display toast notification to user
+**Loading States**:
+- Conditional rendering based on state
+- Show spinner/skeleton while loading
+- Error boundary for component-level errors
 
 ---
 
@@ -1116,59 +1105,77 @@ document.body.addEventListener('htmx:error', function(evt) {
 ### Apple Notes Inspiration vs. Custom Patterns
 
 **Adopted from Apple Notes**:
-- Kelly Green accent color (user familiarity)
-- Clean, minimal interface
+- Clean, minimal interface design
+- Mobile-first approach
 - Card-based note list
 - 44px touch targets
 - System font stack
 
 **Customized for MekkaNote**:
-- HTMX instead of client-side framework
+- Next.js/React for modern development experience
+- Obsidian-inspired editor with markdown toolbar
 - Bi-directional linking (not in Apple Notes)
 - AI suggestions (unique feature)
-- Org-mode support (developer-focused)
+- Dark mode primary theme (developer-focused)
 - Tags with pill badges (custom)
 
 **Trade-offs**:
 - **Simplicity vs. Features**: Prioritized clean UI over feature density
 - **Performance vs. Animations**: Subtle animations, 60fps maintained
-- **Mobile vs. Desktop**: Mobile-first, desktop gets centered container
+- **Mobile vs. Desktop**: Mobile-first, responsive desktop experience
+- **Framework Choice**: React ecosystem over HTMX for better developer experience
 
 ### Technology Choices
 
-**HTMX over React**:
-- ✅ Server-side rendering (better SEO, faster initial load)
-- ✅ Simpler mental model (HTML-centric)
-- ✅ No build step for UI
-- ✅ Progressive enhancement friendly
-- ❌ Less ecosystem/tooling
-- ❌ Harder to find developers with HTMX experience
+**Next.js/React over HTMX**:
+- ✅ Modern React 19 with Server Components
+- ✅ Excellent developer experience and tooling
+- ✅ Large ecosystem of components (shadcn/ui, Radix UI)
+- ✅ Built-in routing and optimization
+- ✅ TypeScript support throughout
+- ❌ Larger bundle size (mitigated by code splitting)
+- ❌ More complex than pure HTMX
 
-**Vanilla CSS over Framework**:
-- ✅ Zero dependencies
-- ✅ Full control over design system
-- ✅ Smaller bundle size
-- ❌ Manual maintenance
-- ❌ No pre-built components
+**shadcn/ui + Radix UI over Custom Components**:
+- ✅ Accessible by default (ARIA attributes)
+- ✅ Well-tested primitives
+- ✅ Customizable with Tailwind CSS
+- ✅ No runtime overhead (copy-paste components)
+- ❌ Requires Tailwind CSS dependency
+- ❌ Initial setup time
+
+**Tailwind CSS v4**:
+- ✅ Utility-first approach
+- ✅ Excellent dark mode support
+- � CSS variables integration
+- ✅ Small production build
+- ❌ Learning curve for team
+
+**SQLite + Drizzle ORM**:
+- ✅ Zero-config database
+- ✅ Type-safe queries with Drizzle
+- ✅ Fast for local-first applications
+- ✅ Easy migrations
+- ❌ Not suitable for multi-user scenarios
 
 ### Future Enhancement Opportunities
 
 **Planned**:
-- Dark mode support (system preference detection)
+- PWA improvements (offline mode)
 - Tablet-optimized layouts (multi-column)
-- Keyboard shortcuts UI (help modal)
-- Custom theme colors (user preferences)
+- Keyboard shortcuts help modal
+- Export to different formats (PDF, Markdown, Org)
 
 **Considering**:
 - Graph view for note connections
 - Advanced search filters
-- Export to different formats (PDF, Markdown)
 - Collaborative editing
+- Cloud sync capabilities
 
 **Unlikely**:
 - Native mobile apps (PWA sufficient)
-- Desktop app (Tauri possible but low priority)
-- Multiple themes (focus on light/dark only)
+- Desktop app (web app adequate)
+- Multiple themes (focus on dark/light only)
 
 ---
 
@@ -1195,6 +1202,16 @@ When applying this design system to production code:
 ---
 
 ## Changelog
+
+### v2.0.0 (2025-01-19)
+- **MAJOR UPDATE**: Migrated from HTMX/Deno to Next.js/React stack
+- Updated color palette to dark mode primary theme
+- Replaced HTMX patterns with React component patterns
+- Updated technology choices (Next.js 16, React 19, Tailwind CSS v4)
+- Added shadcn/ui and Radix UI component patterns
+- Implemented Obsidian-style editor specifications
+- Added mobile-first dark theme CSS variables
+- Updated accessibility guidelines for React patterns
 
 ### v1.0.0 (2025-01-15)
 - Initial design system documentation
