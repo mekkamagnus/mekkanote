@@ -115,7 +115,7 @@
       "description": "As a developer, I need to create a service layer for managing note links.",
       "acceptanceCriteria": [
         "LinkService class created with createLink, deleteLink, getBacklinks methods",
-        "createLink creates bi-directional link (source→target and backlink)",
+        "createLink creates bi-directional link (source\u2192target and backlink)",
         "getBacklinks retrieves all incoming links for a note",
         "Error handling for duplicate links and circular references",
         "Typecheck passes"
@@ -727,6 +727,177 @@
       "priority": 44,
       "passes": true,
       "notes": "US-023 and US-024 marked as complete but functionality not verified. Need to test and confirm working."
+    },
+    {
+      "id": "US-045",
+      "title": "Apply mobile-first dark theme colors to application",
+      "description": "As a user, I want the application to use a consistent dark theme color scheme across all pages.",
+      "acceptanceCriteria": [
+        "CSS variables added for dark theme colors (--bg-primary: #0a0a0a, --bg-secondary: #1a1a1a, etc.)",
+        "Colors applied to all pages and components",
+        "Consistent color scheme across notes list, create, edit, and detail pages",
+        "Mobile modals use dark theme colors",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 45,
+      "passes": true,
+      "notes": "Added mobile-first CSS variables to app/globals.css. Dark theme colors include --bg-primary, --bg-secondary, --bg-tertiary, --text-primary, --text-secondary, --accent, --border."
+    },
+    {
+      "id": "US-046",
+      "title": "Create Obsidian-style markdown editor component",
+      "description": "As a user, I want a full-screen markdown editor similar to Obsidian with formatting toolbar.",
+      "acceptanceCriteria": [
+        "Full-screen textarea with monospace font (SF Mono, Monaco, Menlo)",
+        "Markdown toolbar with buttons: B, I, H1, H2, list, checkbox, quote, [[ ]]",
+        "Minimal header with back button and menu",
+        "Keyboard shortcuts for markdown formatting (Ctrl+S to save)",
+        "Auto-resize textarea based on content",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 46,
+      "passes": true,
+      "notes": "Created components/editor/obsidian-markdown-editor.tsx. Includes toolbar with formatting buttons, keyboard shortcuts, and auto-resize textarea. Used in create and edit note pages."
+    },
+    {
+      "id": "US-047",
+      "title": "Create mobile note card component for note list",
+      "description": "As a user, I want to see notes displayed as compact cards in a horizontal layout.",
+      "acceptanceCriteria": [
+        "Horizontal layout with document icon (emoji)",
+        "Title and preview text displayed",
+        "Inline date display on right side",
+        "Clickable entire card navigates to note",
+        "Responsive design for mobile screens",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 47,
+      "passes": true,
+      "notes": "Created components/mobile/mobile-note-card.tsx. Uses horizontal layout with icon, title, preview, and inline date. Formats date as Today, Yesterday, X days ago, or formatted date."
+    },
+    {
+      "id": "US-048",
+      "title": "Update notes list page to mobile-first layout",
+      "description": "As a mobile user, I want the notes list to use a full-screen mobile layout with minimal header.",
+      "acceptanceCriteria": [
+        "Full-screen mobile layout (100vh)",
+        "Minimal header with hamburger menu and + create button",
+        "Mobile note cards replace desktop card layout",
+        "No container-based padding or margins",
+        "Responsive on mobile and desktop",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 48,
+      "passes": true,
+      "notes": "Updated app/notes/page.tsx and components/notes-list.tsx. Removed container layout, added minimal header with navigation and create button. Uses MobileNoteCard component."
+    },
+    {
+      "id": "US-049",
+      "title": "Update create note page to use Obsidian editor",
+      "description": "As a user, I want to create notes using a full-screen markdown editor without forms.",
+      "acceptanceCriteria": [
+        "Full-screen editor experience (no container)",
+        "ObsidianMarkdownEditor component replaces form",
+        "Markdown toolbar at bottom",
+        "Back button in header",
+        "Auto-generates title from first heading",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 49,
+      "passes": true,
+      "notes": "Updated app/notes/create/page.tsx and components/note-creation-form.tsx. Removed form-based layout, now uses ObsidianMarkdownEditor with default content template."
+    },
+    {
+      "id": "US-050",
+      "title": "Update note detail page to reading view layout",
+      "description": "As a user, I want to view notes in a full-screen reading view with minimal chrome.",
+      "acceptanceCriteria": [
+        "Full-screen reading layout (100vh)",
+        "Minimal header with back and menu buttons",
+        "AI suggestions section with gradient background",
+        "Tags section with suggested tags highlighted",
+        "Links and backlinks sections inline",
+        "Bottom toolbar with Edit, link, and menu buttons",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 50,
+      "passes": true,
+      "notes": "Updated app/notes/[id]/page.tsx. Removed card layout, implemented full-screen reading view. Added AI suggestions with gradient background, tags, links/backlinks sections, and bottom toolbar."
+    },
+    {
+      "id": "US-051",
+      "title": "Update edit note page to use Obsidian editor",
+      "description": "As a user, I want to edit notes using a full-screen markdown editor.",
+      "acceptanceCriteria": [
+        "Full-screen editor experience (no container)",
+        "ObsidianMarkdownEditor component with pre-filled content",
+        "Markdown toolbar at bottom",
+        "Back button in header",
+        "Save redirects to note detail page",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 51,
+      "passes": true,
+      "notes": "Updated app/notes/[id]/edit/page.tsx. Removed form-based layout, now uses ObsidianMarkdownEditor with existing note content pre-filled."
+    },
+    {
+      "id": "US-052",
+      "title": "Style command palette modal for mobile",
+      "description": "As a user, I want the command palette to have a mobile-friendly modal design.",
+      "acceptanceCriteria": [
+        "Full-screen overlay modal (mobile-modal-overlay class)",
+        "Mobile-styled search input with emoji icon",
+        "Horizontal result items with document icons",
+        "Keyboard shortcut hints at bottom",
+        "Consistent with mobile mockup design",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 52,
+      "passes": true,
+      "notes": "Updated components/global/command-palette.tsx. Applied mobile-modal-overlay and mobile-modal-content classes. Uses horizontal layout with icons for results."
+    },
+    {
+      "id": "US-053",
+      "title": "Style link search modal for mobile",
+      "description": "As a user, I want the link search modal to have a mobile-friendly design.",
+      "acceptanceCriteria": [
+        "Full-screen overlay modal",
+        "Mobile-styled search input for [[ links",
+        "Note result items with icons",
+        "Create new note option when no matches",
+        "Keyboard shortcut hints at bottom",
+        "Consistent with command palette styling",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 53,
+      "passes": true,
+      "notes": "Updated components/modals/link-search-modal.tsx. Applied mobile modal styling. Shows create new note option with sparkle icon when no matches found."
+    },
+    {
+      "id": "US-054",
+      "title": "Update mobile navigation drawer design",
+      "description": "As a mobile user, I want the navigation drawer to match the mobile mockup design.",
+      "acceptanceCriteria": [
+        "Remove Home from navigation items",
+        "Keep Notes and Create Note as primary navigation",
+        "Apply dark theme colors to drawer",
+        "Full-height drawer with proper borders",
+        "Consistent with mobile mockup design",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 54,
+      "passes": true,
+      "notes": "Updated components/navigation/mobile-navigation.tsx. Removed Home from navItems. Applied dark theme colors. Drawer width 280px."
     }
   ]
 }

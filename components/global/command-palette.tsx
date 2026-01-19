@@ -89,67 +89,59 @@ export default function CommandPalette({ isOpen, onClose, notes }: CommandPalett
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20">
-      <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm" 
-        onClick={onClose}
-      />
-      <div className="relative z-50 w-full max-w-md rounded-lg border bg-popover p-0 text-popover-foreground shadow-md outline-none">
-        <div className="flex items-center border-b px-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2 h-4 w-4 shrink-0 opacity-50"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </svg>
-          <input
-            ref={inputRef}
-            className="flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search notes..."
-            onKeyDown={handleKeyDown}
-          />
-        </div>
-        <div 
+    <div className="mobile-modal-overlay">
+      <div className="mobile-modal-content">
+        <input
+          ref={inputRef}
+          className="mobile-modal-input"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="🔍 Search notes..."
+          onKeyDown={handleKeyDown}
+        />
+        <div
           ref={listRef}
-          className="max-h-64 overflow-y-auto"
+          style={{ maxHeight: '300px', overflowY: 'auto' }}
         >
           {filteredNotes.length === 0 ? (
-            <div className="p-2 text-sm text-muted-foreground">No notes found.</div>
+            <div style={{ padding: '0.5rem 1rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              No notes found
+            </div>
           ) : (
             filteredNotes.map((note, index) => (
               <div
                 key={note.id}
-                className={`p-2 cursor-pointer ${
-                  index === selectedIndex ? 'bg-accent' : ''
-                }`}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.5rem 1rem',
+                  cursor: 'pointer',
+                  background: index === selectedIndex ? 'var(--bg-tertiary)' : 'transparent',
+                }}
                 onClick={() => handleSelectNote(note)}
                 onMouseEnter={() => setSelectedIndex(index)}
               >
-                <div className="flex flex-col">
-                  <span className="font-medium">
+                <span>📄</span>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
                     {highlightText(note.title, searchTerm)}
-                  </span>
-                  <span className="text-sm text-muted-foreground truncate">
-                    {highlightText(note.content.substring(0, 100) + '...', searchTerm)}
-                  </span>
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                    {highlightText(note.content.substring(0, 60) + '...', searchTerm)}
+                  </div>
                 </div>
               </div>
             ))
           )}
         </div>
-        <div className="border-t p-2 text-xs text-muted-foreground">
-          Press Enter to select, Esc to close
+        <div style={{
+          padding: '0.5rem 1rem',
+          fontSize: '0.625rem',
+          color: 'var(--text-secondary)',
+          borderTop: '1px solid var(--border)',
+        }}>
+          Enter to select • Esc to close
         </div>
       </div>
     </div>

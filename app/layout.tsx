@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   title: "MekkaNote",
   description: "AI-Powered Note-Taking Application",
   manifest: "/manifest.json",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+  themeColor: "#0a0a0a",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "MekkaNote",
+  },
 };
 
 export default function RootLayout({

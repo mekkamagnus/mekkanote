@@ -2,56 +2,28 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-
-interface NoteFormData {
-  title: string;
-  content: string;
-}
+import ObsidianMarkdownEditor from "@/components/editor/obsidian-markdown-editor";
 
 export default function NoteCreationForm() {
   const router = useRouter();
-  // Pre-fill with current timestamp and default org-mode template
-  const defaultContent = `#+TITLE:
-#+DATE: ${new Date().toISOString().split('T')[0]}
-#+AUTHOR:
-#+DESCRIPTION:
+  const [isLoading, setIsLoading] = useState(false);
 
-* Introduction
-
-* Main Content
-
-* Conclusion
+  const defaultContent = `# ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
 
 `;
-  const [formData, setFormData] = useState<NoteFormData>({
-    title: `Note ${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}`,
-    content: defaultContent
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSave = async (content: string) => {
     setIsLoading(true);
-    setError(null);
-
     try {
       const response = await fetch('/api/notes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          title: content.split('\n')[0].replace(/^#\s+/, '') || 'Untitled Note',
+          content,
+        }),
       });
 
       if (!response.ok) {
@@ -60,68 +32,22 @@ export default function NoteCreationForm() {
       }
 
       const newNote = await response.json();
-      
-      // Reset form
-      setFormData({ title: "", content: "" });
-      
-      // Redirect to the newly created note or notes list
       router.push(`/notes/${newNote.id}`);
-      router.refresh(); // Refresh to update any cached data
+      router.refresh();
     } catch (err) {
       console.error('Error creating note:', err);
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      throw err;
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle>Create New Note</CardTitle>
-        <CardDescription>Add a title and content for your new note</CardDescription>
-      </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
-          {error && (
-            <div className="p-3 bg-red-100 text-red-700 rounded-md">
-              {error}
-            </div>
-          )}
-          
-          <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              placeholder="Enter note title"
-              required
-              disabled={isLoading}
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="content">Content</Label>
-            <Textarea
-              id="content"
-              name="content"
-              value={formData.content}
-              onChange={handleChange}
-              placeholder="Write your note content here..."
-              required
-              rows={8}
-              disabled={isLoading}
-            />
-          </div>
-        </CardContent>
-        <CardFooter className="flex justify-end space-x-2">
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? 'Creating...' : 'Create Note'}
-          </Button>
-        </CardFooter>
-      </form>
-    </Card>
+    <ObsidianMarkdownEditor
+      initialContent={defaultContent}
+      onSave={handleSave}
+      onCancel={() => router.push('/notes')}
+      placeholder="# Start writing..."
+    />
   );
 }

@@ -13,12 +13,15 @@
 - `/components` - Reusable React components, including shadcn/ui components in `/components/ui`
 - `/lib` - Utility functions and shared logic
 - `/public` - Static assets
+- `/types` - TypeScript declaration files
 
 ## Development Patterns
 - Use `bun run dev` for development server
 - Use `bun run build` for production builds
 - Use `bun run type-check` for TypeScript checking
 - Use `bun run lint` for code quality checks
+- Module resolution should be set to "bundler" in tsconfig.json for compatibility with Next.js 16+
+- When encountering missing type definition errors, create declaration files in `/types` directory
 
 ## Component Development
 - shadcn/ui components should be placed in `/components/ui`

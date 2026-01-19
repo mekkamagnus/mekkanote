@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MekkaNote - Mobile Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #ededed;
+            --text-secondary: #a1a1aa;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #27272a;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #e5e5e5;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Grid Layout for iPhone Frames */
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
+            gap: 60px;
+            justify-items: center;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        /* Screen Wrapper */
+        .screen-wrapper {
+            position: relative;
+            padding-top: 50px;
+        }
+
+        /* iPhone Frame Container */
+        .iphone-frame {
+            width: 390px;
+            height: 844px;
+            background: var(--bg-primary);
+            border-radius: 40px;
+            border: 8px solid #1a1a1a;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Screen Label */
+        .screen-label {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 44px;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .signal-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: flex-end;
+            gap: 1px;
+        }
+
+        .signal-bar {
+            width: 3px;
+            background: var(--text-primary);
+            border-radius: 1px;
+        }
+
+        .battery {
+            width: 24px;
+            height: 12px;
+            border: 1.5px solid var(--text-primary);
+            border-radius: 2px;
+            position: relative;
+            padding: 1px;
+        }
+
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: 3px;
+            width: 2px;
+            height: 4px;
+            background: var(--text-primary);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .battery-level {
+            height: 100%;
+            width: 80%;
+            background: var(--success);
+            border-radius: 1px;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .content-area::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Screen-specific Styles */
+        .screen-content {
+            padding: 1rem;
+            min-height: 100%;
+        }
+
+        .screen-header {
+            margin-bottom: 1rem;
+        }
+
+        .screen-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .screen-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.375rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 0.625rem 0.75rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.875rem;
+        }
+
+        .form-textarea {
+            min-height: 200px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            line-height: 1.6;
+            resize: none;
+        }
+
+        /* Note Cards */
+        .note-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .note-card-title {
+            font-weight: 600;
+            margin-bottom: 0.375rem;
+            font-size: 1rem;
+        }
+
+        .note-card-preview {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-bottom: 0.75rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .note-card-date {
+            color: var(--text-secondary);
+            font-size: 0.625rem;
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            font-size: 0.625rem;
+            margin-right: 0.375rem;
+            margin-bottom: 0.375rem;
+        }
+
+        .tag.suggested {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid var(--accent);
+        }
+
+        /* Links */
+        .link-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            margin-bottom: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        /* AI Suggestions */
+        .ai-suggestions {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            margin-bottom: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        .suggestion-actions {
+            display: flex;
+            gap: 0.375rem;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 100px;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            width: 90%;
+            max-height: 400px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .modal-results {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .modal-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+
+        .modal-item.selected {
+            background: var(--bg-tertiary);
+        }
+
+        /* Navigation Drawer */
+        .nav-drawer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100%;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border);
+            transform: translateX(0);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-drawer-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .nav-drawer-items {
+            flex: 1;
+            padding: 1rem;
+        }
+
+        .nav-drawer-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .nav-drawer-item.active {
+            background: var(--bg-tertiary);
+        }
+
+        .nav-drawer-footer {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Note Content */
+        .note-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .note-content h2 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .note-content ul {
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-content li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Section Headers */
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        /* Header with back button */
+        .header-with-back {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Status bar info */
+        .status-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            margin-top: 0.5rem;
+            border-radius: 0 0 12px 12px;
+            font-size: 0.75rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .mockup-grid {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>MekkaNote Mobile Mockup</h1>
+        <p>All application screens rendered at iPhone 13/14 Pro dimensions (390×844px)</p>
+    </div>
+
+    <div class="mockup-grid">
+
+        <!-- Screen 01: Notes List -->
+        <div class="screen-wrapper">
+            <div class="screen-label">sc01 - Notes List</div>
+            <div class="iphone-frame">
+                <div class="status-bar">
+                <div class="status-left">
+                    <span>9:41</span>
+                </div>
+                <div class="status-right">
+                    <div class="signal-icon">
+                        <div class="signal-bar" style="height: 4px;"></div>
+                        <div class="signal-bar" style="height: 6px;"></div>
+                        <div class="signal-bar" style="height: 8px;"></div>
+                        <div class="signal-bar" style="height: 10px;"></div>
+                    </div>
+                    <div class="battery">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-area">
+                <div style="height: 100%; display: flex; flex-direction: column;">
+                    <!-- Minimal Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.5rem; cursor: pointer;">☰</span>
+                            <span style="font-weight: 600;">MekkaNote</span>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <span style="font-size: 1.25rem; cursor: pointer;">🔍</span>
+                            <span style="font-size: 1.25rem; cursor: pointer;">+</span>
+                        </div>
+                    </div>
+
+                    <!-- Notes List -->
+                    <div style="flex: 1; overflow-y: auto;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer;">
+                            <span style="font-size: 1.5rem; color: var(--accent);">📄</span>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 500; margin-bottom: 0.25rem;">Understanding Zettelkasten</div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">The Zettelkasten method is a system of note-taking...</div>
+                            </div>
+                            <div style="font-size: 0.625rem; color: var(--text-secondary);">Jan 15</div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer;">
+                            <span style="font-size: 1.5rem; color: var(--accent);">📄</span>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 500; margin-bottom: 0.25rem;">Machine Learning Basics</div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Machine learning is a subset of artificial intelligence...</div>
+                            </div>
+                            <div style="font-size: 0.625rem; color: var(--text-secondary);">Jan 14</div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer;">
+                            <span style="font-size: 1.5rem; color: var(--accent);">📄</span>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 500; margin-bottom: 0.25rem;">Product Design Principles</div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Good product design starts with understanding user needs...</div>
+                            </div>
+                            <div style="font-size: 0.625rem; color: var(--text-secondary);">Jan 13</div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer;">
+                            <span style="font-size: 1.5rem; color: var(--accent);">📄</span>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 500; margin-bottom: 0.25rem;">React Hooks Patterns</div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">React Hooks provide a way to use state and other React features...</div>
+                            </div>
+                            <div style="font-size: 0.625rem; color: var(--text-secondary);">Jan 12</div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer;">
+                            <span style="font-size: 1.5rem; color: var(--accent);">📄</span>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 500; margin-bottom: 0.25rem;">The Future of AI</div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Artificial intelligence is evolving rapidly...</div>
+                            </div>
+                            <div style="font-size: 0.625rem; color: var(--text-secondary);">Jan 11</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 02: Create Note -->
+        <div class="screen-wrapper">
+            <div class="screen-label">sc02 - Create Note</div>
+            <div class="iphone-frame">
+                <div class="status-bar">
+                    <div class="status-left">
+                        <span>9:41</span>
+                    </div>
+                    <div class="status-right">
+                        <div class="signal-icon">
+                            <div class="signal-bar" style="height: 4px;"></div>
+                            <div class="signal-bar" style="height: 6px;"></div>
+                            <div class="signal-bar" style="height: 8px;"></div>
+                            <div class="signal-bar" style="height: 10px;"></div>
+                        </div>
+                        <div class="battery">
+                            <div class="battery-level"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-area">
+                <div style="height: 100%; display: flex; flex-direction: column;">
+                    <!-- Minimal Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);">
+                        <button class="btn btn-icon btn-secondary">←</button>
+                        <div style="display: flex; gap: 1rem;">
+                            <span style="font-size: 1.25rem; cursor: pointer;">⋯</span>
+                        </div>
+                    </div>
+
+                    <!-- Editor Area -->
+                    <div style="flex: 1; padding: 1rem; overflow-y: auto;">
+                        <textarea class="form-textarea" placeholder="# Start writing..." style="width: 100%; height: 100%; min-height: 600px; border: none; background: transparent; padding: 0; font-size: 1rem; line-height: 1.8; font-family: 'SF Mono', 'Monaco', 'Menlo', monospace; resize: none;"></textarea>
+                    </div>
+
+                    <!-- Markdown Toolbar -->
+                    <div style="display: flex; gap: 0.25rem; padding: 0.5rem 1rem; border-top: 1px solid var(--border); background: var(--bg-secondary);">
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 1.1rem;">B</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 1.1rem; font-style: italic;">I</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.9rem;">H1</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.9rem;">H2</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">☰</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">✓</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">»</button>
+                        <div style="flex: 1;"></div>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">[[ ]]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 03: Note Detail (Reading View) -->
+        <div class="screen-wrapper">
+            <div class="screen-label">sc03 - Note Detail</div>
+            <div class="iphone-frame">
+            <div class="status-bar">
+                <div class="status-left">
+                    <span>9:41</span>
+                </div>
+                <div class="status-right">
+                    <div class="signal-icon">
+                        <div class="signal-bar" style="height: 4px;"></div>
+                        <div class="signal-bar" style="height: 6px;"></div>
+                        <div class="signal-bar" style="height: 8px;"></div>
+                        <div class="signal-bar" style="height: 10px;"></div>
+                    </div>
+                    <div class="battery">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-area">
+                <div style="height: 100%; display: flex; flex-direction: column;">
+                    <!-- Minimal Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);">
+                        <button class="btn btn-icon btn-secondary">←</button>
+                        <div style="display: flex; gap: 1rem;">
+                            <span style="font-size: 1.25rem; cursor: pointer;">🔍</span>
+                            <span style="font-size: 1.25rem; cursor: pointer;">⋯</span>
+                        </div>
+                    </div>
+
+                    <!-- Reading View -->
+                    <div style="flex: 1; padding: 1.5rem 1.5rem 1rem 1.5rem; overflow-y: auto;">
+                        <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem;">Understanding Zettelkasten</h1>
+                        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Jan 15, 2026 • Edited Jan 18, 2026</div>
+
+                        <p style="margin-bottom: 1rem;">The Zettelkasten method is a system of note-taking and knowledge management that emphasizes creating connections between ideas.</p>
+
+                        <h2 style="font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;">Key Principles</h2>
+
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                            <li style="margin-bottom: 0.5rem;"><strong>Atomicity</strong>: Each note contains one idea</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Autonomy</strong>: Notes are standalone</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Connectivity</strong>: Link notes to create webs</li>
+                        </ul>
+
+                        <h2 style="font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;">Why It Works</h2>
+
+                        <p style="margin-bottom: 1rem;">By creating a network of interconnected ideas, Zettelkasten mimics how the brain stores information. This leads to emergent insights and creative connections.</p>
+
+                        <h2 style="font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;">Connections</h2>
+
+                        <p style="margin-bottom: 1rem;">Related to <a href="#" style="color: var(--accent);">Note-Taking Strategies</a> and <a href="#" style="color: var(--accent);">The Future of AI</a></p>
+
+                        <!-- AI Suggestions -->
+                        <div style="margin-top: 2rem; padding: 1rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px;">
+                            <div style="display: flex; align-items: center; gap: 0.375rem; margin-bottom: 0.75rem; color: var(--accent); font-weight: 600; font-size: 0.875rem;">
+                                <span>🤖</span> AI Suggestions
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 0.375rem;">
+                                <div style="font-size: 0.875rem;"><strong>Tag:</strong> knowledge-management</div>
+                                <div style="display: flex; gap: 0.375rem;">
+                                    <button class="btn btn-secondary btn-sm">✓</button>
+                                    <button class="btn btn-secondary btn-sm">✕</button>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 0.375rem;">
+                                <div style="font-size: 0.875rem;"><strong>Connection:</strong> Product Design (94%)</div>
+                                <div style="display: flex; gap: 0.375rem;">
+                                    <button class="btn btn-secondary btn-sm">✓</button>
+                                    <button class="btn btn-secondary btn-sm">✕</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tags -->
+                        <div style="margin-top: 1.5rem;">
+                            <h3 style="font-size: 0.875rem; margin-bottom: 0.5rem; color: var(--text-secondary);">TAGS</h3>
+                            <span class="tag">zettelkasten</span>
+                            <span class="tag">productivity</span>
+                            <span class="tag suggested">+ knowledge</span>
+                        </div>
+
+                        <!-- Outbound Links -->
+                        <div style="margin-top: 1.5rem;">
+                            <h3 style="font-size: 0.875rem; margin-bottom: 0.5rem; color: var(--text-secondary);">LINKS TO</h3>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-tertiary); border-radius: 6px; margin-bottom: 0.375rem;">
+                                <span>📄</span>
+                                <div style="font-size: 0.875rem;">Note-Taking Strategies</div>
+                            </div>
+                        </div>
+
+                        <!-- Backlinks -->
+                        <div style="margin-top: 1.5rem; margin-bottom: 2rem;">
+                            <h3 style="font-size: 0.875rem; margin-bottom: 0.5rem; color: var(--text-secondary);">LINKED FROM</h3>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-tertiary); border-radius: 6px; margin-bottom: 0.375rem;">
+                                <span>📄</span>
+                                <div style="font-size: 0.875rem;">Machine Learning Basics</div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-tertiary); border-radius: 6px; margin-bottom: 0.375rem;">
+                                <span>📄</span>
+                                <div style="font-size: 0.875rem;">Product Design Principles</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Toolbar -->
+                    <div style="display: flex; gap: 0.25rem; padding: 0.5rem 1rem; border-top: 1px solid var(--border); background: var(--bg-secondary);">
+                        <button class="btn btn-secondary" style="flex: 1;">✏️ Edit</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">[[ ]]</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">⋯</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 04: Edit Note -->
+        <div class="screen-wrapper">
+            <div class="screen-label">sc04 - Edit Note</div>
+            <div class="iphone-frame">
+            <div class="status-bar">
+                <div class="status-left">
+                    <span>9:41</span>
+                </div>
+                <div class="status-right">
+                    <div class="signal-icon">
+                        <div class="signal-bar" style="height: 4px;"></div>
+                        <div class="signal-bar" style="height: 6px;"></div>
+                        <div class="signal-bar" style="height: 8px;"></div>
+                        <div class="signal-bar" style="height: 10px;"></div>
+                    </div>
+                    <div class="battery">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-area">
+                <div style="height: 100%; display: flex; flex-direction: column;">
+                    <!-- Minimal Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);">
+                        <button class="btn btn-icon btn-secondary">←</button>
+                        <div style="display: flex; gap: 1rem;">
+                            <span style="font-size: 1.25rem; cursor: pointer;">⋯</span>
+                        </div>
+                    </div>
+
+                    <!-- Editor Area -->
+                    <div style="flex: 1; padding: 1rem; overflow-y: auto;">
+                        <textarea class="form-textarea" style="width: 100%; height: 100%; min-height: 600px; border: none; background: transparent; padding: 0; font-size: 1rem; line-height: 1.8; font-family: 'SF Mono', 'Monaco', 'Menlo', monospace; resize: none;"># Understanding Zettelkasten
+
+The Zettelkasten method is a system of note-taking and knowledge management that emphasizes creating connections between ideas.
+
+## Key Principles
+
+- **Atomicity**: Each note contains one idea
+- **Autonomy**: Notes are standalone
+- **Connectivity**: Link notes to create webs
+
+## Why It Works
+
+By creating a network of interconnected ideas, Zettelkasten mimics how the brain stores information.
+
+## Connections
+
+Related to [[Note-Taking Strategies]] and [[The Future of AI]]</textarea>
+                    </div>
+
+                    <!-- Markdown Toolbar -->
+                    <div style="display: flex; gap: 0.25rem; padding: 0.5rem 1rem; border-top: 1px solid var(--border); background: var(--bg-secondary);">
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 1.1rem;">B</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 1.1rem; font-style: italic;">I</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.9rem;">H1</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.9rem;">H2</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">☰</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">✓</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">»</button>
+                        <div style="flex: 1;"></div>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem;">[[ ]]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 05: Command Palette Modal -->
+        <div class="screen-wrapper">
+            <div class="screen-label">sc05 - Command Palette</div>
+            <div class="iphone-frame">
+            <div class="status-bar">
+                <div class="status-left">
+                    <span>9:41</span>
+                </div>
+                <div class="status-right">
+                    <div class="signal-icon">
+                        <div class="signal-bar" style="height: 4px;"></div>
+                        <div class="signal-bar" style="height: 6px;"></div>
+                        <div class="signal-bar" style="height: 8px;"></div>
+                        <div class="signal-bar" style="height: 10px;"></div>
+                    </div>
+                    <div class="battery">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-area" style="position: relative;">
+                <div class="screen-content" style="opacity: 0.3;">
+                    <div class="header-with-back">
+                        <div>
+                            <h1 class="screen-title">My Notes</h1>
+                        </div>
+                        <button class="btn btn-primary btn-sm">+ New</button>
+                    </div>
+                    <input type="text" class="form-input" placeholder="🔍 Search notes...">
+                    <div class="note-card">
+                        <div class="note-card-title">Understanding Zettelkasten</div>
+                        <div class="note-card-preview">The Zettelkasten method...</div>
+                    </div>
+                </div>
+
+                <div class="modal-overlay">
+                    <div class="modal-content">
+                        <input type="text" class="modal-input" placeholder="🔍 Search notes..." value="Zet">
+                        <div class="modal-results">
+                            <div class="modal-item selected">
+                                <span>📄</span>
+                                <div>
+                                    <div style="font-weight: 600;"><strong>Understanding Zettelkasten</strong></div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">The Zettelkasten method...</div>
+                                </div>
+                            </div>
+                            <div class="modal-item">
+                                <span>📄</span>
+                                <div>
+                                    <div style="font-weight: 600;">Machine Learning Basics</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">Machine learning is...</div>
+                                </div>
+                            </div>
+                            <div class="modal-item">
+                                <span>✨</span>
+                                <div>
+                                    <div style="font-weight: 600;">Create new note</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">No matching notes found</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 0.5rem 1rem; font-size: 0.625rem; color: var(--text-secondary); border-top: 1px solid var(--border);">
+                            Enter to select • Esc to close
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 06: Link Search Modal -->
+        <div class="screen-wrapper">
+            <div class="screen-label">sc06 - Link Search Modal</div>
+            <div class="iphone-frame">
+            <div class="status-bar">
+                <div class="status-left">
+                    <span>9:41</span>
+                </div>
+                <div class="status-right">
+                    <div class="signal-icon">
+                        <div class="signal-bar" style="height: 4px;"></div>
+                        <div class="signal-bar" style="height: 6px;"></div>
+                        <div class="signal-bar" style="height: 8px;"></div>
+                        <div class="signal-bar" style="height: 10px;"></div>
+                    </div>
+                    <div class="battery">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-area" style="position: relative;">
+                <div class="screen-content" style="opacity: 0.3;">
+                    <div class="header-with-back">
+                        <div>
+                            <h1 class="screen-title">Create Note</h1>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Save</button>
+                    </div>
+                    <div class="card">
+                        <div class="form-group">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-input" value="Note - 2026-01-19-1430">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Content</label>
+                            <textarea class="form-textarea">* Created: [2026-01-19 Mon 14:30]
+
+* The Main Idea
+  Your key thought goes here...
+
+* Connections
+  Related to [[</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-overlay">
+                    <div class="modal-content">
+                        <input type="text" class="modal-input" placeholder="🔗 Search for notes to link..." value="[[Note-Taki">
+                        <div class="modal-results">
+                            <div class="modal-item selected">
+                                <span>📄</span>
+                                <div>
+                                    <div style="font-weight: 600;"><strong>Note-Taking Strategies</strong></div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">Effective note-taking methods...</div>
+                                </div>
+                            </div>
+                            <div class="modal-item">
+                                <span>📄</span>
+                                <div>
+                                    <div style="font-weight: 600;">Neuroscience of Learning</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">How the brain processes...</div>
+                                </div>
+                            </div>
+                            <div class="modal-item" style="border-top: 1px solid var(--border);">
+                                <span>✨</span>
+                                <div>
+                                    <div style="font-weight: 600;">+ Create: "Neuroscience of Learning"</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">No exact match found</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 0.5rem 1rem; font-size: 0.625rem; color: var(--text-secondary); border-top: 1px solid var(--border);">
+                            Enter to select • Esc to close
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

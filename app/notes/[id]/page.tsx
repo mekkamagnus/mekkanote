@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Note } from "@/types/note";
 import { NoteLink } from "@/types/link";
 import NoteContentRenderer from "@/components/content/note-content-renderer";
@@ -132,9 +130,9 @@ export default function NoteDetailPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-10">
-        <div className="flex justify-center items-center h-64">
-          <div className="text-lg">Loading note...</div>
+      <div className="mobile-full-screen" style={{ background: 'var(--bg-primary)' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <div style={{ color: 'var(--text-primary)' }}>Loading note...</div>
         </div>
       </div>
     );
@@ -142,22 +140,24 @@ export default function NoteDetailPage() {
 
   if (error) {
     return (
-      <div className="container mx-auto py-10">
-        <div className="p-4 bg-red-100 text-red-700 rounded-md">
-          Error: {error}
-        </div>
-        <div className="mt-4">
-          <Link href="/notes">
-            <Button>Back to Notes</Button>
-          </Link>
-        </div>
+      <div className="mobile-full-screen" style={{ background: 'var(--bg-primary)', padding: '1rem' }}>
+        <div style={{ color: 'var(--danger)', marginBottom: '1rem' }}>Error: {error}</div>
+        <Link href="/notes">
+          <button style={{
+            padding: '0.5rem 1rem',
+            background: 'var(--bg-tertiary)',
+            color: 'var(--text-primary)',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+          }}>Back to Notes</button>
+        </Link>
       </div>
     );
   }
 
   const handleAcceptLink = async (targetNoteId: string) => {
     try {
-      // Create a link between current note and the suggested note
       const response = await fetch('/api/links', {
         method: 'POST',
         headers: {
@@ -173,7 +173,6 @@ export default function NoteDetailPage() {
         throw new Error('Failed to create link');
       }
 
-      // Remove the suggestion from the list
       setSuggestedLinks(prev => prev.filter(link => link.id !== targetNoteId));
     } catch (error) {
       console.error('Error accepting link:', error);
@@ -181,128 +180,219 @@ export default function NoteDetailPage() {
   };
 
   const handleDismissLink = (targetNoteId: string) => {
-    // Remove the suggestion from the list
     setSuggestedLinks(prev => prev.filter(link => link.id !== targetNoteId));
   };
 
   if (!note) {
     return (
-      <div className="container mx-auto py-10">
-        <div className="p-4 bg-yellow-100 text-yellow-700 rounded-md">
-          Note not found
-        </div>
-        <div className="mt-4">
-          <Link href="/notes">
-            <Button>Back to Notes</Button>
-          </Link>
-        </div>
+      <div className="mobile-full-screen" style={{ background: 'var(--bg-primary)', padding: '1rem' }}>
+        <div style={{ color: 'var(--warning)', marginBottom: '1rem' }}>Note not found</div>
+        <Link href="/notes">
+          <button style={{
+            padding: '0.5rem 1rem',
+            background: 'var(--bg-tertiary)',
+            color: 'var(--text-primary)',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+          }}>Back to Notes</button>
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-10">
-      <Card>
-        <CardHeader>
-          <CardTitle>{note.title}</CardTitle>
-          <div className="text-sm text-gray-500">
-            Created: {note.createdAt.toLocaleString()} | Updated: {note.updatedAt.toLocaleString()}
+    <div className="mobile-full-screen" style={{ background: 'var(--bg-primary)' }}>
+      {/* Minimal Header */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '0.75rem 1rem',
+        borderBottom: '1px solid var(--border)',
+      }}>
+        <Link href="/notes">
+          <button style={{
+            background: 'transparent',
+            border: 'none',
+            color: 'var(--text-primary)',
+            cursor: 'pointer',
+            fontSize: '1.25rem',
+            padding: '0.5rem',
+          }}>←</button>
+        </Link>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <span style={{ fontSize: '1.25rem', cursor: 'pointer' }}>⋯</span>
+        </div>
+      </div>
+
+      {/* Reading View */}
+      <div className="mobile-content-area" style={{ padding: '1.5rem 1.5rem 1rem 1.5rem' }}>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+          {note.title}
+        </h1>
+        <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+          {note.createdAt.toLocaleDateString()} • Edited {note.updatedAt.toLocaleDateString()}
+        </div>
+
+        <NoteContentRenderer content={note.content} />
+
+        {/* AI Suggestions */}
+        {suggestedLinks.length > 0 && (
+          <div className="ai-suggestions" style={{ marginTop: '2rem' }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.375rem',
+              marginBottom: '0.75rem',
+              color: 'var(--accent)',
+              fontWeight: 600,
+              fontSize: '0.875rem',
+            }}>
+              <span>🤖</span> AI Suggestions
+            </div>
+            {suggestedLinks.map((link, index) => (
+              <div key={index} style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '0.5rem',
+                background: 'var(--bg-secondary)',
+                borderRadius: '6px',
+                marginBottom: '0.375rem',
+              }}>
+                <div style={{ fontSize: '0.875rem' }}>
+                  <strong>Connection:</strong> {link.title} ({(link.relevanceScore * 100).toFixed(0)}%)
+                </div>
+                <div style={{ display: 'flex', gap: '0.375rem' }}>
+                  <button
+                    onClick={() => handleAcceptLink(link.id)}
+                    style={{
+                      padding: '0.25rem 0.5rem',
+                      background: 'var(--bg-tertiary)',
+                      color: 'var(--success)',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontSize: '0.75rem',
+                    }}
+                  >✓</button>
+                  <button
+                    onClick={() => handleDismissLink(link.id)}
+                    style={{
+                      padding: '0.25rem 0.5rem',
+                      background: 'var(--bg-tertiary)',
+                      color: 'var(--danger)',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontSize: '0.75rem',
+                    }}
+                  >✕</button>
+                </div>
+              </div>
+            ))}
           </div>
-        </CardHeader>
-        <CardContent>
-          <NoteContentRenderer content={note.content} />
+        )}
 
-          {/* Outbound Links Section */}
-          {outboundLinks.length > 0 && (
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold mb-2">Links</h3>
-              <ul className="space-y-1">
-                {outboundLinks.map((link) => (
-                  <li key={link.id} className="ml-4">
-                    <Link href={`/notes/${link.targetNoteId}`} className="text-blue-600 hover:underline">
-                      {link.targetNoteId}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+        {/* Tags */}
+        {suggestedTags.length > 0 && (
+          <div style={{ marginTop: '1.5rem' }}>
+            <h3 style={{ fontSize: '0.875rem', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>TAGS</h3>
+            {suggestedTags.map((tag, index) => (
+              <span key={index} className="tag suggested">+ {tag}</span>
+            ))}
+          </div>
+        )}
 
-          {/* Backlinks Section */}
-          {backlinks.length > 0 && (
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold mb-2">Backlinks</h3>
-              <ul className="space-y-1">
-                {backlinks.map((link) => (
-                  <li key={link.id} className="ml-4">
-                    <Link href={`/notes/${link.sourceNoteId}`} className="text-blue-600 hover:underline">
-                      {link.sourceNoteId}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* AI Suggested Tags Section */}
-          {suggestedTags.length > 0 && (
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold mb-2">AI Suggested Tags</h3>
-              <div className="flex flex-wrap gap-2">
-                {suggestedTags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* AI Suggested Links Section */}
-          {suggestedLinks.length > 0 && (
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold mb-2">Suggested Links</h3>
-              <div className="space-y-2">
-                {suggestedLinks.map((link, index) => (
-                  <div key={index} className="flex justify-between items-center p-3 border rounded-lg">
-                    <Link href={`/notes/${link.id}`} className="text-blue-600 hover:underline flex-grow">
-                      {link.title}
-                    </Link>
-                    <div className="text-sm text-gray-500">
-                      Relevance: {(link.relevanceScore * 100).toFixed(0)}%
-                    </div>
-                    <div className="flex space-x-2 ml-4">
-                      <button
-                        onClick={() => handleAcceptLink(link.id)}
-                        className="text-green-600 hover:text-green-800 text-sm"
-                      >
-                        Accept
-                      </button>
-                      <button
-                        onClick={() => handleDismissLink(link.id)}
-                        className="text-gray-500 hover:text-gray-700 text-sm"
-                      >
-                        Dismiss
-                      </button>
-                    </div>
+        {/* Outbound Links */}
+        {outboundLinks.length > 0 && (
+          <div style={{ marginTop: '1.5rem' }}>
+            <h3 style={{ fontSize: '0.875rem', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>LINKS TO</h3>
+            {outboundLinks.map((link) => (
+              <Link key={link.id} href={`/notes/${link.targetNoteId}`}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.5rem',
+                  background: 'var(--bg-tertiary)',
+                  borderRadius: '6px',
+                  marginBottom: '0.375rem',
+                }}>
+                  <span>📄</span>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--accent)' }}>
+                    {link.targetNoteId}
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Link href="/notes">
-            <Button variant="outline">Back to Notes</Button>
-          </Link>
-          <Link href={`/notes/${note.id}/edit`}>
-            <Button>Edit Note</Button>
-          </Link>
-        </CardFooter>
-      </Card>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* Backlinks */}
+        {backlinks.length > 0 && (
+          <div style={{ marginTop: '1.5rem', marginBottom: '2rem' }}>
+            <h3 style={{ fontSize: '0.875rem', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>LINKED FROM</h3>
+            {backlinks.map((link) => (
+              <Link key={link.id} href={`/notes/${link.sourceNoteId}`}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.5rem',
+                  background: 'var(--bg-tertiary)',
+                  borderRadius: '6px',
+                  marginBottom: '0.375rem',
+                }}>
+                  <span>📄</span>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--accent)' }}>
+                    {link.sourceNoteId}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Bottom Toolbar */}
+      <div style={{
+        display: 'flex',
+        gap: '0.25rem',
+        padding: '0.5rem 1rem',
+        borderTop: '1px solid var(--border)',
+        background: 'var(--bg-secondary)',
+      }}>
+        <Link href={`/notes/${note.id}/edit`} style={{ flex: 1 }}>
+          <button style={{
+            width: '100%',
+            padding: '0.5rem 0.75rem',
+            background: 'var(--bg-tertiary)',
+            color: 'var(--text-primary)',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontWeight: 500,
+          }}>✏️ Edit</button>
+        </Link>
+        <button style={{
+          padding: '0.5rem 0.75rem',
+          background: 'var(--bg-tertiary)',
+          color: 'var(--text-primary)',
+          border: 'none',
+          borderRadius: '8px',
+          cursor: 'pointer',
+        }}>[[ ]]</button>
+        <button style={{
+          padding: '0.5rem 0.75rem',
+          background: 'var(--bg-tertiary)',
+          color: 'var(--text-primary)',
+          border: 'none',
+          borderRadius: '8px',
+          cursor: 'pointer',
+        }}>⋯</button>
+      </div>
     </div>
   );
 }

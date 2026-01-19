@@ -11,7 +11,6 @@ export default function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: 'Home', href: '/' },
     { name: 'Notes', href: '/notes' },
     { name: 'Create Note', href: '/notes/create' },
   ];
@@ -19,19 +18,27 @@ export default function MobileNavigation() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden">
+        <Button variant="ghost" size="icon" className="md:hidden" style={{ color: 'var(--text-primary)' }}>
           <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+      <SheetContent
+        side="right"
+        className="w-[280px]"
+        style={{
+          background: 'var(--bg-secondary)',
+          borderLeft: '1px solid var(--border)',
+        }}
+      >
         <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between pb-4 border-b">
-            <h2 className="text-lg font-semibold">Menu</h2>
+          <div className="flex items-center justify-between pb-4" style={{ borderBottom: '1px solid var(--border)' }}>
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Menu</h2>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
+              style={{ color: 'var(--text-primary)' }}
             >
               <X className="h-5 w-5" />
               <span className="sr-only">Close menu</span>
@@ -43,13 +50,14 @@ export default function MobileNavigation() {
                 key={item.href}
                 href={item.href}
                 className="px-3 py-2 text-base font-medium rounded-md hover:bg-accent hover:text-accent-foreground"
+                style={{ color: 'var(--text-primary)' }}
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
           </nav>
-          <div className="pt-4 border-t flex justify-end">
+          <div className="pt-4 flex justify-end" style={{ borderTop: '1px solid var(--border)' }}>
             <ThemeToggle />
           </div>
         </div>

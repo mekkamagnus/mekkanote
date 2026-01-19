@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Note } from "@/types/note";
+import MobileNoteCard from "@/components/mobile/mobile-note-card";
 
 export default function NotesList() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -49,12 +49,15 @@ export default function NotesList() {
 
   if (loading) {
     return (
-      <div className="space-y-4">
+      <div>
         {[...Array(5)].map((_, index) => (
-          <div key={index} className="p-4 border rounded-lg">
-            <Skeleton className="h-6 w-3/4 mb-2" />
-            <Skeleton className="h-4 w-full mb-1" />
-            <Skeleton className="h-4 w-2/3" />
+          <div key={index} className="mobile-note-card">
+            <Skeleton className="h-6 w-6" />
+            <div style={{ flex: 1 }}>
+              <Skeleton className="h-4 w-3/4 mb-1" />
+              <Skeleton className="h-3 w-full" />
+            </div>
+            <Skeleton className="h-3 w-12" />
           </div>
         ))}
       </div>
@@ -63,7 +66,7 @@ export default function NotesList() {
 
   if (error) {
     return (
-      <div className="p-4 bg-red-100 text-red-700 rounded-md">
+      <div style={{ padding: '1rem', color: 'var(--danger)' }}>
         Error: {error}
       </div>
     );
@@ -71,35 +74,22 @@ export default function NotesList() {
 
   if (notes.length === 0) {
     return (
-      <div className="text-center py-10">
-        <h3 className="text-lg font-medium">No notes yet</h3>
-        <p className="text-muted-foreground">Get started by creating a new note.</p>
+      <div style={{ textAlign: 'center', padding: '2rem' }}>
+        <h3 style={{ fontSize: '1rem', fontWeight: 500, marginBottom: '0.5rem' }}>No notes yet</h3>
+        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+          Get started by creating a new note.
+        </p>
         <Link href="/notes/create">
-          <Button className="mt-4">Create Note</Button>
+          <Button style={{ fontSize: '0.875rem' }}>Create Note</Button>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div>
       {notes.map((note) => (
-        <Link key={note.id} href={`/notes/${note.id}`}>
-          <Card className="hover:shadow-md transition-shadow cursor-pointer">
-            <CardHeader>
-              <CardTitle>{note.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600 line-clamp-2">
-                {note.content.substring(0, 150)}
-                {note.content.length > 150 ? '...' : ''}
-              </p>
-              <p className="text-xs text-gray-400 mt-2">
-                Created: {new Date(note.createdAt).toLocaleDateString()}
-              </p>
-            </CardContent>
-          </Card>
-        </Link>
+        <MobileNoteCard key={note.id} note={note} />
       ))}
     </div>
   );
