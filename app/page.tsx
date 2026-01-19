@@ -1,33 +1,72 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
+import NotesList from "@/components/notes-list";
+import { CommandPaletteProvider } from "@/components/global/command-palette-provider";
+import { Note } from "@/types/note";
 import MobileNavigation from "@/components/navigation/mobile-navigation";
 
 export default function Home() {
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await fetch('/api/notes');
+        if (response.ok) {
+          type ApiNote = {
+            id: string;
+            title: string;
+            content: string;
+            createdAt: number;
+            updatedAt: number;
+          };
+
+          const data: ApiNote[] = await response.json();
+          // Convert timestamp numbers to Date objects to match our Note type
+          const notesWithDates = data.map((note: ApiNote) => ({
+            ...note,
+            createdAt: new Date(note.createdAt),
+            updatedAt: new Date(note.updatedAt),
+          }));
+          setNotes(notesWithDates);
+        }
+      } catch (error) {
+        console.error('Error fetching notes for command palette:', error);
+      }
+    };
+
+    fetchNotes();
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <header className="absolute top-4 right-4 md:right-auto md:left-4 flex items-center space-x-2">
-        <MobileNavigation />
-        <ThemeToggle />
-      </header>
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start sm:text-left">
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            Welcome to MekkaNote
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Your AI-powered note-taking application with smart tagging and linking capabilities.
-          </p>
+    <CommandPaletteProvider notes={notes}>
+      <div className="mobile-full-screen" style={{ background: 'var(--bg-primary)' }}>
+        {/* Minimal Header */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0.75rem 1rem',
+          borderBottom: '1px solid var(--border)',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <MobileNavigation />
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>MekkaNote</span>
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <Link href="/notes/create">
+              <span style={{ fontSize: '1.25rem', cursor: 'pointer' }}>+</span>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <Link href="/notes">
-            <Button variant="default">View My Notes</Button>
-          </Link>
-          <Link href="/notes/create">
-            <Button variant="outline">Create New Note</Button>
-          </Link>
+
+        {/* Notes List */}
+        <div className="mobile-content-area">
+          <NotesList />
         </div>
-      </main>
-    </div>
+      </div>
+    </CommandPaletteProvider>
   );
 }
