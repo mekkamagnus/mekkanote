@@ -13,11 +13,13 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
-    // Check for saved theme in localStorage or respect system preference
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    return savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    // Check if we're on the client side before accessing localStorage/window
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') as Theme | null;
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      return savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    }
+    return 'light'; // Default theme for SSR
   });
 
   useEffect(() => {
@@ -28,8 +30,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       document.documentElement.classList.remove('dark');
     }
 
-    // Save theme preference to localStorage
-    localStorage.setItem('theme', theme);
+    // Save theme preference to localStorage (client-side only)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', theme);
+    }
   }, [theme]);
 
   const toggleTheme = () => {

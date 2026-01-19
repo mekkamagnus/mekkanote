@@ -1,0 +1,6 @@
+#+TITLE: Browser Test Note
+#+DATE: 2026-01-18
+#+AUTHOR: 
+#+DESCRIPTION: 
+
+This note was created to test the UI flow

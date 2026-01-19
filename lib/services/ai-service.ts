@@ -1,4 +1,4 @@
-import { openai } from '../ai/config';
+import { deepseek } from '../ai/config';
 import { Note } from '../../types/note';
 
 export class AIService {
@@ -28,16 +28,16 @@ export class AIService {
         Note Content: ${note.content.substring(0, 2000)}  // Limit content to avoid token issues
       `;
 
-      const response = await openai.chat.completions.create({
-        model: 'gpt-4o-mini', // Using a more cost-effective model for this task
+      const response = await deepseek.chat.completions.create({
+        model: 'deepseek-chat',
         messages: [
-          { 
-            role: 'system', 
-            content: 'You are a helpful assistant that generates relevant tags for notes. Respond with only comma-separated tags, nothing else.' 
+          {
+            role: 'system',
+            content: 'You are a helpful assistant that generates relevant tags for notes. Respond with only comma-separated tags, nothing else.'
           },
-          { 
-            role: 'user', 
-            content: prompt 
+          {
+            role: 'user',
+            content: prompt
           }
         ],
         temperature: 0.3,
@@ -60,11 +60,11 @@ export class AIService {
       console.error('Error generating tag suggestions:', error);
       
       // Return empty array if API key is missing or invalid
-      if (error instanceof Error && 
-          (error.message.includes('401') || 
-           error.message.includes('api_key') || 
+      if (error instanceof Error &&
+          (error.message.includes('401') ||
+           error.message.includes('api_key') ||
            error.message.includes('authentication'))) {
-        console.warn('OpenAI API error - check your API key');
+        console.warn('DeepSeek API error - check your API key');
         return [];
       }
       

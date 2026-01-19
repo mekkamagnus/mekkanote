@@ -1,0 +1,6 @@
+#+TITLE: DeepSeek Test Note
+#+DATE: 2026-01-19
+#+AUTHOR: 
+#+DESCRIPTION: 
+
+This is a test note to verify DeepSeek AI integration is working correctly.

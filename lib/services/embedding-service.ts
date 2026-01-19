@@ -1,85 +1,56 @@
-import { openai } from '../ai/config';
 import { db } from '../db';
 import { noteEmbeddings, notes } from '../db/schema';
-import { eq, inArray, not } from 'drizzle-orm';
+import { eq, inArray, not, or, like } from 'drizzle-orm';
 import { v7 as uuidv7 } from 'uuid';
 import { Note, NoteWithSimilarity } from '../../types/note';
 
 export class EmbeddingService {
   /**
-   * Generates an embedding for a note using OpenAI's text-embedding-3-small model
+   * Generates an embedding for a note
+   * Note: DeepSeek doesn't provide embeddings API, so this is a placeholder
+   * For production, consider using OpenAI embeddings or a local embedding model
    */
   async generateEmbedding(note: Note): Promise<void> {
-    try {
-      // Call OpenAI to generate the embedding
-      const response = await openai.embeddings.create({
-        model: 'text-embedding-3-small',
-        input: `${note.title}\n\n${note.content}`,
-      });
-
-      const embedding = response.data[0].embedding;
-
-      // Store the embedding in the database
-      await db.insert(noteEmbeddings).values({
-        id: uuidv7(),
-        noteId: note.id,
-        embedding: JSON.stringify(embedding), // Store as JSON string
-        modelName: 'text-embedding-3-small',
-      });
-    } catch (error) {
-      console.error('Error generating embedding:', error);
-      
-      // Return empty array if API key is missing or invalid
-      if (error instanceof Error && 
-          (error.message.includes('401') || 
-           error.message.includes('api_key') || 
-           error.message.includes('authentication'))) {
-        console.warn('OpenAI API error - check your API key');
-        return;
-      }
-      
-      throw new Error(`Failed to generate embedding: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
+    // DeepSeek doesn't have an embeddings API
+    // For now, we'll skip embedding generation and use text-based similarity
+    console.warn('Embedding generation skipped - DeepSeek does not provide embeddings API');
+    return;
   }
 
   /**
-   * Finds notes similar to the given note using vector similarity
+   * Finds notes similar to the given note using text-based similarity
+   * Note: Since DeepSeek doesn't provide embeddings, we use text matching
    */
   async findSimilarNotes(noteId: string, limit: number = 5): Promise<NoteWithSimilarity[]> {
     try {
-      // Get the note to find embeddings for
-      const note = await db.select().from(notes).where(eq(notes.id, noteId)).get();
-      if (!note) {
+      // Get the target note
+      const targetNote = await db.select().from(notes).where(eq(notes.id, noteId)).get();
+      if (!targetNote) {
         throw new Error('Note not found');
       }
 
-      // Get the embedding for this note
-      const noteEmbeddingRecord = await db.select()
-        .from(noteEmbeddings)
-        .where(eq(noteEmbeddings.noteId, noteId))
-        .get();
-      
-      if (!noteEmbeddingRecord) {
-        // If no embedding exists, generate one
-        await this.generateEmbedding(note);
-        return []; // Return empty array since we just generated the embedding
-      }
+      // Extract keywords from title and content
+      const keywords = this.extractKeywords(targetNote.title + ' ' + targetNote.content);
 
-      // Parse the embedding
-      const targetEmbedding = JSON.parse(noteEmbeddingRecord.embedding) as number[];
+      // Find other notes that contain these keywords
+      const allNotes = await db.select().from(notes).where(not(eq(notes.id, noteId)));
 
-      // Get all other embeddings from the database
-      const allEmbeddings = await db.select()
-        .from(noteEmbeddings)
-        .where((not(eq(noteEmbeddings.noteId, noteId))));
+      // Calculate similarity scores based on keyword overlap
+      const similarities = allNotes.map(note => {
+        const noteText = (note.title + ' ' + note.content).toLowerCase();
+        const targetText = (targetNote.title + ' ' + targetNote.content).toLowerCase();
 
-      // Calculate cosine similarity between the target embedding and all other embeddings
-      const similarities = allEmbeddings.map(embeddingRecord => {
-        const compareEmbedding = JSON.parse(embeddingRecord.embedding) as number[];
-        const similarity = this.cosineSimilarity(targetEmbedding, compareEmbedding);
+        // Simple Jaccard similarity
+        const noteWords = new Set(noteText.split(/\s+/));
+        const targetWords = new Set(targetText.split(/\s+/));
+
+        const intersection = new Set([...noteWords].filter(x => targetWords.has(x)));
+        const union = new Set([...noteWords, ...targetWords]);
+
+        const similarity = union.size > 0 ? intersection.size / union.size : 0;
 
         return {
-          noteId: embeddingRecord.noteId,
+          noteId: note.id,
           similarity
         };
       });
@@ -120,27 +91,13 @@ export class EmbeddingService {
   }
 
   /**
-   * Calculates cosine similarity between two vectors
+   * Extracts meaningful keywords from text
    */
-  private cosineSimilarity(vecA: number[], vecB: number[]): number {
-    if (vecA.length !== vecB.length) {
-      throw new Error('Vectors must have the same length');
-    }
-
-    let dotProduct = 0;
-    let normA = 0;
-    let normB = 0;
-
-    for (let i = 0; i < vecA.length; i++) {
-      dotProduct += vecA[i] * vecB[i];
-      normA += Math.pow(vecA[i], 2);
-      normB += Math.pow(vecB[i], 2);
-    }
-
-    if (normA === 0 || normB === 0) {
-      return 0; // If one of the vectors is zero, similarity is 0
-    }
-
-    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+  private extractKeywords(text: string): string[] {
+    // Simple keyword extraction: remove common words, lowercase, split
+    const commonWords = new Set(['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by']);
+    return text.toLowerCase()
+      .split(/\s+/)
+      .filter(word => word.length > 3 && !commonWords.has(word));
   }
 }

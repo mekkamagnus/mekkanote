@@ -1,15 +1,21 @@
 import OpenAI from 'openai';
 import { env } from '@/env';
 
-// Initialize OpenAI client
-let openai: OpenAI;
+// Initialize DeepSeek client (OpenAI-compatible API)
+let deepseek: OpenAI;
 
-if (!env.OPENAI_API_KEY) {
-  console.warn('OPENAI_API_KEY is not set. AI features will not work.');
+if (!env.DEEPSEEK_API_KEY) {
+  console.warn('DEEPSEEK_API_KEY is not set. AI features will not work.');
   // We'll still initialize with a dummy key to avoid runtime errors in development
-  openai = new OpenAI({ apiKey: 'sk-dummy-key-for-dev' });
+  deepseek = new OpenAI({
+    apiKey: 'sk-dummy-key-for-dev',
+    baseURL: 'https://api.deepseek.com'
+  });
 } else {
-  openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
+  deepseek = new OpenAI({
+    apiKey: env.DEEPSEEK_API_KEY,
+    baseURL: 'https://api.deepseek.com'
+  });
 }
 
-export { openai };
+export { deepseek };

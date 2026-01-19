@@ -1,0 +1,40 @@
+# MekkaNote - Ralph Progress Tracker
+# Branch: ralph/mekkanote-mvp-fixes
+# Description: AI-Powered Note-Taking Assistant MVP - Missing features and bug fixes
+
+## Completed User Stories
+US-042: Fix AI model configuration for tag and link suggestions
+
+## In Progress
+None
+
+## Remaining User Stories
+US-041: Create edit note page
+US-043: Verify and test Command palette (Ctrl/Cmd+K) functionality
+US-044: Verify and test [[ link search modal in editor
+
+---
+Total Stories: 4
+Completed: 1
+Remaining: 3
+Progress: 25%
+
+## Recent Work
+
+### $(date) - US-042: Migrated to DeepSeek API
+**Changes Made:**
+- Updated env.ts: Changed from OPENAI_API_KEY to DEEPSEEK_API_KEY
+- Updated lib/ai/config.ts: Configured DeepSeek client with baseURL 'https://api.deepseek.com'
+- Updated lib/services/ai-service.ts: Changed from 'gpt-4o-mini' to 'deepseek-chat' model
+- Updated lib/services/embedding-service.ts: Replaced OpenAI embeddings with text-based Jaccard similarity (DeepSeek doesn't provide embeddings API)
+
+**Testing Results:**
+- ✅ Tag suggestions working: DeepSeek API returns relevant tags
+- ✅ Link suggestions working: Text-based similarity finds related notes
+- ✅ Dev server starts successfully
+- ✅ No runtime errors
+
+**Notes:**
+- DeepSeek has OpenAI-compatible API, so minimal code changes were needed
+- For embeddings, implemented Jaccard similarity algorithm as fallback
+- AI features now fully functional with DeepSeek

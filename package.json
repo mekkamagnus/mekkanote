@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "PORT=8008 next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "PORT=8008 next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
